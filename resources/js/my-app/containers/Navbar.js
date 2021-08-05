@@ -9,7 +9,7 @@ const NavbarContainer = ({children,container, ...restProps}) => {
             return (
                 <Navbar.Nav className="justify-content-between">
                     <Navbar.Nav>
-                        <Navbar.Link /*onClick={() => dispatchGlobalState(toggleSidebarClass())} */ >
+                        <Navbar.Link to={"#"} /*onClick={() => dispatchGlobalState(toggleSidebarClass())} */ >
                             <i className="fa fa-bars" />
                         </Navbar.Link>
                         <Navbar.Link to={ROOMS_PAGE}>Rooms</Navbar.Link>

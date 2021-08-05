@@ -9,9 +9,9 @@ const Loading = ({children, ...restProps}) => {
     )
 }
 
-Loading.Large = function LargeLoading({children,...restProps}){
+Loading.Large = function LargeLoading({children, color,...restProps}){
     return (
-        <Large>
+        <Large color={color ? color: "#FFF"}>
             <div></div>
             <div></div>
             <div></div>

@@ -80140,6 +80140,91 @@ react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEB
 
 /***/ }),
 
+/***/ "./resources/js/my-app/actions/MessagesActions.js":
+/*!********************************************************!*\
+  !*** ./resources/js/my-app/actions/MessagesActions.js ***!
+  \********************************************************/
+/*! exports provided: STOP_MESSAGES_LOADING_ACTION, START_MESSAGES_LOADING_ACTION, GET_MESSAGES_ACTION */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "STOP_MESSAGES_LOADING_ACTION", function() { return STOP_MESSAGES_LOADING_ACTION; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "START_MESSAGES_LOADING_ACTION", function() { return START_MESSAGES_LOADING_ACTION; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GET_MESSAGES_ACTION", function() { return GET_MESSAGES_ACTION; });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _urls_AppBaseUrl__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../urls/AppBaseUrl */ "./resources/js/my-app/urls/AppBaseUrl.js");
+/* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./index */ "./resources/js/my-app/actions/index.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
+
+var STOP_MESSAGES_LOADING_ACTION = function STOP_MESSAGES_LOADING_ACTION() {
+  return {
+    type: _index__WEBPACK_IMPORTED_MODULE_2__["STOP_MESSAGES_LOADING"]
+  };
+};
+var START_MESSAGES_LOADING_ACTION = function START_MESSAGES_LOADING_ACTION() {
+  return {
+    type: _index__WEBPACK_IMPORTED_MODULE_2__["START_MESSAGES_LOADING"]
+  };
+};
+var GET_MESSAGES_ACTION = function GET_MESSAGES_ACTION(roomId) {
+  return /*#__PURE__*/function () {
+    var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(dispatch, getState) {
+      var res;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _context.prev = 0;
+              _context.next = 3;
+              return axios({
+                url: _urls_AppBaseUrl__WEBPACK_IMPORTED_MODULE_1__["ROOMS_PAGE_API"] + roomId + '/messages',
+                method: 'GET',
+                headers: {
+                  authorization: 'bearer ' + getState().auth.user.token
+                }
+              });
+
+            case 3:
+              res = _context.sent;
+              console.log(res);
+              dispatch({
+                type: _index__WEBPACK_IMPORTED_MODULE_2__["GET_MESSAGES"],
+                payload: res.data.data
+              });
+              dispatch(STOP_MESSAGES_LOADING_ACTION()); // handle Success
+
+              _context.next = 12;
+              break;
+
+            case 9:
+              _context.prev = 9;
+              _context.t0 = _context["catch"](0);
+              dispatch(STOP_MESSAGES_LOADING_ACTION()); // handle this
+
+            case 12:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee, null, [[0, 9]]);
+    }));
+
+    return function (_x, _x2) {
+      return _ref.apply(this, arguments);
+    };
+  }();
+};
+
+/***/ }),
+
 /***/ "./resources/js/my-app/actions/authActions.js":
 /*!****************************************************!*\
   !*** ./resources/js/my-app/actions/authActions.js ***!
@@ -80356,7 +80441,7 @@ var LOGIN_SUCCESS_ACTION = function LOGIN_SUCCESS_ACTION() {
 /*!**********************************************!*\
   !*** ./resources/js/my-app/actions/index.js ***!
   \**********************************************/
-/*! exports provided: LOGIN, LOGOUT, LOGIN_SUCCESS, LOGIN_FAILED, SHOW_MODAL, HIDE_MODAL, SHOW_TOAST, HIDE_TOAST, TOAST_MESSAGE, TOGGLE_SIDEBAR_CLASS, START_BUTTON_LOADING, STOP_BUTTON_LOADING, START_LOADING, STOP_LOADING, GET_ROOMS */
+/*! exports provided: LOGIN, LOGOUT, LOGIN_SUCCESS, LOGIN_FAILED, SHOW_MODAL, HIDE_MODAL, SHOW_TOAST, HIDE_TOAST, TOAST_MESSAGE, TOGGLE_SIDEBAR_CLASS, START_BUTTON_LOADING, STOP_BUTTON_LOADING, START_LOADING, STOP_LOADING, GET_MESSAGES, START_MESSAGES_LOADING, STOP_MESSAGES_LOADING, GET_ROOMS, GET_USERS */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -80375,7 +80460,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "STOP_BUTTON_LOADING", function() { return STOP_BUTTON_LOADING; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "START_LOADING", function() { return START_LOADING; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "STOP_LOADING", function() { return STOP_LOADING; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GET_MESSAGES", function() { return GET_MESSAGES; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "START_MESSAGES_LOADING", function() { return START_MESSAGES_LOADING; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "STOP_MESSAGES_LOADING", function() { return STOP_MESSAGES_LOADING; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GET_ROOMS", function() { return GET_ROOMS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GET_USERS", function() { return GET_USERS; });
 // Auth Related Actions
 var LOGIN = 'LOGIN';
 var LOGOUT = 'LOGOUT';
@@ -80391,9 +80480,15 @@ var TOGGLE_SIDEBAR_CLASS = 'TOGGLE_SIDEBAR_CLASS';
 var START_BUTTON_LOADING = 'START_BUTTON_LOADING';
 var STOP_BUTTON_LOADING = 'STOP_BUTTON_LOADING';
 var START_LOADING = 'START_LOADING';
-var STOP_LOADING = 'STOP_LOADING'; // Rooms Actions
+var STOP_LOADING = 'STOP_LOADING'; // Messages Actions
 
-var GET_ROOMS = 'GET_ROOMS';
+var GET_MESSAGES = 'GET_MESSAGES';
+var START_MESSAGES_LOADING = 'START_MESSAGES_LOADING';
+var STOP_MESSAGES_LOADING = 'STOP_MESSAGES_LOADING'; // Rooms Actions
+
+var GET_ROOMS = 'GET_ROOMS'; //  Users Actions
+
+var GET_USERS = 'GET_USERS';
 
 /***/ }),
 
@@ -81094,9 +81189,12 @@ var Loading = function Loading(_ref) {
 
 Loading.Large = function LargeLoading(_ref2) {
   var children = _ref2.children,
-      restProps = _objectWithoutProperties(_ref2, ["children"]);
+      color = _ref2.color,
+      restProps = _objectWithoutProperties(_ref2, ["children", "color"]);
 
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles_loading__WEBPACK_IMPORTED_MODULE_1__["Large"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null));
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles_loading__WEBPACK_IMPORTED_MODULE_1__["Large"], {
+    color: color ? color : "#FFF"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Loading);
@@ -81116,7 +81214,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Large", function() { return Large; });
 /* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
 function _templateObject2() {
-  var data = _taggedTemplateLiteral(["\n    display: inline-block;\n    position: relative;\n    width: 80px;\n    height: 80px;\n    div {\n        animation: lds-roller 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;\n        transform-origin: 40px 40px;\n    }\n    div:after {\n        content: \" \";\n        display: block;\n        position: absolute;\n        width: 7px;\n        height: 7px;\n        border-radius: 50%;\n        background: #fff;\n        margin: -4px 0 0 -4px;\n    }\n    div:nth-child(1) {\n        animation-delay: -0.036s;\n    }\n    div:nth-child(1):after {\n        top: 63px;\n        left: 63px;\n    }\n    div:nth-child(2) {\n        animation-delay: -0.072s;\n    }\n    div:nth-child(2):after {\n        top: 68px;\n        left: 56px;\n    }\n    div:nth-child(3) {\n        animation-delay: -0.108s;\n    }\n    div:nth-child(3):after {\n        top: 71px;\n        left: 48px;\n    }\n    div:nth-child(4) {\n        animation-delay: -0.144s;\n    }\n    div:nth-child(4):after {\n        top: 72px;\n        left: 40px;\n    }\n    div:nth-child(5) {\n        animation-delay: -0.18s;\n    }\n    div:nth-child(5):after {\n        top: 71px;\n        left: 32px;\n    }\n    div:nth-child(6) {\n        animation-delay: -0.216s;\n    }\n    div:nth-child(6):after {\n        top: 68px;\n        left: 24px;\n    }\n    div:nth-child(7) {\n        animation-delay: -0.252s;\n    }\n    div:nth-child(7):after {\n        top: 63px;\n        left: 17px;\n    }\n    div:nth-child(8) {\n        animation-delay: -0.288s;\n    }\n    div:nth-child(8):after {\n        top: 56px;\n        left: 12px;\n    }\n    @keyframes lds-roller {\n        0% {\n            transform: rotate(0deg);\n        }\n        100% {\n            transform: rotate(360deg);\n        }\n    }\n"]);
+  var data = _taggedTemplateLiteral(["\n    display: inline-block;\n    position: relative;\n    width: 80px;\n    height: 80px;\n    div {\n        animation: lds-roller 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;\n        transform-origin: 40px 40px;\n    }\n    div:after {\n        content: \" \";\n        display: block;\n        position: absolute;\n        width: 7px;\n        height: 7px;\n        border-radius: 50%;\n        background: ", ";\n        margin: -4px 0 0 -4px;\n    }\n    div:nth-child(1) {\n        animation-delay: -0.036s;\n    }\n    div:nth-child(1):after {\n        top: 63px;\n        left: 63px;\n    }\n    div:nth-child(2) {\n        animation-delay: -0.072s;\n    }\n    div:nth-child(2):after {\n        top: 68px;\n        left: 56px;\n    }\n    div:nth-child(3) {\n        animation-delay: -0.108s;\n    }\n    div:nth-child(3):after {\n        top: 71px;\n        left: 48px;\n    }\n    div:nth-child(4) {\n        animation-delay: -0.144s;\n    }\n    div:nth-child(4):after {\n        top: 72px;\n        left: 40px;\n    }\n    div:nth-child(5) {\n        animation-delay: -0.18s;\n    }\n    div:nth-child(5):after {\n        top: 71px;\n        left: 32px;\n    }\n    div:nth-child(6) {\n        animation-delay: -0.216s;\n    }\n    div:nth-child(6):after {\n        top: 68px;\n        left: 24px;\n    }\n    div:nth-child(7) {\n        animation-delay: -0.252s;\n    }\n    div:nth-child(7):after {\n        top: 63px;\n        left: 17px;\n    }\n    div:nth-child(8) {\n        animation-delay: -0.288s;\n    }\n    div:nth-child(8):after {\n        top: 56px;\n        left: 12px;\n    }\n    @keyframes lds-roller {\n        0% {\n            transform: rotate(0deg);\n        }\n        100% {\n            transform: rotate(360deg);\n        }\n    }\n"]);
 
   _templateObject2 = function _templateObject2() {
     return data;
@@ -81139,7 +81237,9 @@ function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(
 
 
 var Container = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject());
-var Large = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject2());
+var Large = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject2(), function (props) {
+  return props.color;
+});
 
 /***/ }),
 
@@ -81431,7 +81531,11 @@ var NavbarContainer = function NavbarContainer(_ref) {
   var render = function render() {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components__WEBPACK_IMPORTED_MODULE_2__["Navbar"].Nav, {
       className: "justify-content-between"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components__WEBPACK_IMPORTED_MODULE_2__["Navbar"].Nav, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components__WEBPACK_IMPORTED_MODULE_2__["Navbar"].Link, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components__WEBPACK_IMPORTED_MODULE_2__["Navbar"].Nav, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components__WEBPACK_IMPORTED_MODULE_2__["Navbar"].Link, {
+      to: "#"
+      /*onClick={() => dispatchGlobalState(toggleSidebarClass())} */
+
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
       className: "fa fa-bars"
     })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components__WEBPACK_IMPORTED_MODULE_2__["Navbar"].Link, {
       to: _urls_AppBaseUrl__WEBPACK_IMPORTED_MODULE_3__["ROOMS_PAGE"]
@@ -83112,12 +83216,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _components_UserIcon__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../components/UserIcon */ "./resources/js/my-app/components/UserIcon.js");
-/* harmony import */ var _context_actions_GlobalActions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../context/actions/GlobalActions */ "./resources/js/my-app/context/actions/GlobalActions.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _context_AppContext__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../context/AppContext */ "./resources/js/my-app/context/AppContext.js");
-/* harmony import */ var _components_Modal__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../components/Modal */ "./resources/js/my-app/components/Modal.js");
-/* harmony import */ var _urls_AppBaseUrl__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../urls/AppBaseUrl */ "./resources/js/my-app/urls/AppBaseUrl.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _components_Modal__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../components/Modal */ "./resources/js/my-app/components/Modal.js");
+/* harmony import */ var _urls_AppBaseUrl__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../urls/AppBaseUrl */ "./resources/js/my-app/urls/AppBaseUrl.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -83129,8 +83231,6 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-
-
 
 
 
@@ -83155,17 +83255,13 @@ var MessageUsers = function MessageUsers(props) {
       searchUser = _useState6[0],
       setSearchUser = _useState6[1];
 
-  var _useContext = Object(react__WEBPACK_IMPORTED_MODULE_0__["useContext"])(_context_AppContext__WEBPACK_IMPORTED_MODULE_4__["AppContext"]),
-      auth = _useContext.auth,
-      dispatchGlobalState = _useContext.dispatchGlobalState;
-
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     getMembers();
   }, []);
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     if (searchUser !== '') {
-      axios__WEBPACK_IMPORTED_MODULE_3___default()({
-        url: _urls_AppBaseUrl__WEBPACK_IMPORTED_MODULE_6__["PROFILE_PAGE_API"],
+      axios__WEBPACK_IMPORTED_MODULE_2___default()({
+        url: _urls_AppBaseUrl__WEBPACK_IMPORTED_MODULE_4__["PROFILE_PAGE_API"],
         method: 'GET',
         params: {
           email: searchUser
@@ -83182,27 +83278,27 @@ var MessageUsers = function MessageUsers(props) {
   }, [searchUser]);
 
   var removeUser = function removeUser(user) {
-    axios__WEBPACK_IMPORTED_MODULE_3___default()({
+    axios__WEBPACK_IMPORTED_MODULE_2___default()({
       method: "DELETE",
-      url: _urls_AppBaseUrl__WEBPACK_IMPORTED_MODULE_6__["ROOMS_PAGE_API"] + props.id + '/users/' + user.id,
+      url: _urls_AppBaseUrl__WEBPACK_IMPORTED_MODULE_4__["ROOMS_PAGE_API"] + props.id + '/users/' + user.id,
       headers: {
         authorization: "bearer " + auth.token
       }
     }).then(function (res) {
-      dispatchGlobalState(Object(_context_actions_GlobalActions__WEBPACK_IMPORTED_MODULE_2__["setToastShowAction"])());
-      dispatchGlobalState(Object(_context_actions_GlobalActions__WEBPACK_IMPORTED_MODULE_2__["setToastMessage"])("User successfully removed", "".concat(user.name, " is removed")));
+      dispatchGlobalState(setToastShowAction());
+      dispatchGlobalState(setToastMessage("User successfully removed", "".concat(user.name, " is removed")));
       getMembers();
     })["catch"](function (err) {
-      dispatchGlobalState(Object(_context_actions_GlobalActions__WEBPACK_IMPORTED_MODULE_2__["setToastShowAction"])());
-      dispatchGlobalState(Object(_context_actions_GlobalActions__WEBPACK_IMPORTED_MODULE_2__["setToastMessage"])("Error, failed to remove", "User failed to remove"));
+      dispatchGlobalState(setToastShowAction());
+      dispatchGlobalState(setToastMessage("Error, failed to remove", "User failed to remove"));
     });
   }; // Get Room users ...
 
 
   var getMembers = function getMembers() {
-    axios__WEBPACK_IMPORTED_MODULE_3___default()({
+    axios__WEBPACK_IMPORTED_MODULE_2___default()({
       method: "GET",
-      url: _urls_AppBaseUrl__WEBPACK_IMPORTED_MODULE_6__["ROOMS_PAGE_API"] + props.id + '/users',
+      url: _urls_AppBaseUrl__WEBPACK_IMPORTED_MODULE_4__["ROOMS_PAGE_API"] + props.id + '/users',
       headers: {
         Authorization: 'bearer ' + auth.token
       }
@@ -83218,22 +83314,22 @@ var MessageUsers = function MessageUsers(props) {
     var selectedUser = users.find(function (user) {
       return user.email === searchUser;
     });
-    axios__WEBPACK_IMPORTED_MODULE_3___default()({
-      url: _urls_AppBaseUrl__WEBPACK_IMPORTED_MODULE_6__["ROOMS_PAGE_API"] + props.id + '/users/' + selectedUser.id,
+    axios__WEBPACK_IMPORTED_MODULE_2___default()({
+      url: _urls_AppBaseUrl__WEBPACK_IMPORTED_MODULE_4__["ROOMS_PAGE_API"] + props.id + '/users/' + selectedUser.id,
       method: 'POST',
       headers: {
         authorization: 'bearer ' + auth.token
       }
     }).then(function (res) {
       getMembers();
-      dispatchGlobalState(Object(_context_actions_GlobalActions__WEBPACK_IMPORTED_MODULE_2__["setModalHiddenAction"])());
-      dispatchGlobalState(Object(_context_actions_GlobalActions__WEBPACK_IMPORTED_MODULE_2__["setToastShowAction"])());
-      dispatchGlobalState(Object(_context_actions_GlobalActions__WEBPACK_IMPORTED_MODULE_2__["setToastMessage"])("User successfully added", "".concat(selectedUser.name, " added")));
+      dispatchGlobalState(setModalHiddenAction());
+      dispatchGlobalState(setToastShowAction());
+      dispatchGlobalState(setToastMessage("User successfully added", "".concat(selectedUser.name, " added")));
       setSearchUser('');
       setUsers([]);
     })["catch"](function (err) {
-      dispatchGlobalState(Object(_context_actions_GlobalActions__WEBPACK_IMPORTED_MODULE_2__["setToastShowAction"])());
-      dispatchGlobalState(Object(_context_actions_GlobalActions__WEBPACK_IMPORTED_MODULE_2__["setToastMessage"])("Error, failed to add", "User failed to add"));
+      dispatchGlobalState(setToastShowAction());
+      dispatchGlobalState(setToastMessage("Error, failed to add", "User failed to add"));
     });
   };
 
@@ -83279,11 +83375,11 @@ var MessageUsers = function MessageUsers(props) {
     className: "room-controls"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     onClick: function onClick() {
-      return dispatchGlobalState(Object(_context_actions_GlobalActions__WEBPACK_IMPORTED_MODULE_2__["setModalVisibleAction"])());
+      return dispatchGlobalState(setModalVisibleAction());
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
     className: "fa fa-plus"
-  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Modal__WEBPACK_IMPORTED_MODULE_5__["default"], {
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Modal__WEBPACK_IMPORTED_MODULE_3__["default"], {
     title: "Add User",
     onClick: addUser
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -83327,32 +83423,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var laravel_echo__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! laravel-echo */ "./node_modules/laravel-echo/dist/echo.js");
 /* harmony import */ var pusher_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! pusher-js */ "./node_modules/pusher-js/dist/web/pusher.js");
 /* harmony import */ var pusher_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(pusher_js__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _context_AppContext__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../context/AppContext */ "./resources/js/my-app/context/AppContext.js");
-/* harmony import */ var _components__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../components */ "./resources/js/my-app/components/index.js");
-/* harmony import */ var _urls_AppBaseUrl__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../urls/AppBaseUrl */ "./resources/js/my-app/urls/AppBaseUrl.js");
-/* harmony import */ var _MessageUsers__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./MessageUsers */ "./resources/js/my-app/pages/app/Room/MessageUsers.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
-var _this = undefined;
-
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
-
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
-function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
-
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
-
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
-
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
-
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+/* harmony import */ var _components__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../components */ "./resources/js/my-app/components/index.js");
+/* harmony import */ var _urls_AppBaseUrl__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../urls/AppBaseUrl */ "./resources/js/my-app/urls/AppBaseUrl.js");
+/* harmony import */ var _MessageUsers__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./MessageUsers */ "./resources/js/my-app/pages/app/Room/MessageUsers.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _actions_MessagesActions__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../../actions/MessagesActions */ "./resources/js/my-app/actions/MessagesActions.js");
 
 
 
@@ -83365,198 +83441,205 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 var SingleRoom = function SingleRoom(props) {
-  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])({}),
-      _useState2 = _slicedToArray(_useState, 2),
-      room = _useState2[0],
-      setRoom = _useState2[1];
+  /*
+  const [room, setRoom] = useState({});
+  const [myEcho,setMyEcho] = useState(null)
+  */
+  // Active Users
 
-  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(null),
-      _useState4 = _slicedToArray(_useState3, 2),
-      myEcho = _useState4[0],
-      setMyEcho = _useState4[1]; // Active Users
+  /*
+  const [activeUsers,setActiveUsers] = useState([]);
+  const [joinedUser,setJoinedUser] = useState([]);
+  const [leavingUser,setLeavingUser] = useState([]);
+  */
+  // messages
 
+  /*
+  const [message,setMessage] = useState('');
+  const [messages,setMessages] = useState([]);
+  const [userWriting,setUserWriting] = useState('');
+  const [isTyping,setIsTyping] = useState(false);
+  const [socketMessage,setSocketMessage] = useState(null);
+  const {auth} = useContext(AppContext);
+  const [loading,setLoading] = useState(true);
+  */
 
-  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])([]),
-      _useState6 = _slicedToArray(_useState5, 2),
-      activeUsers = _useState6[0],
-      setActiveUsers = _useState6[1];
-
-  var _useState7 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])([]),
-      _useState8 = _slicedToArray(_useState7, 2),
-      joinedUser = _useState8[0],
-      setJoinedUser = _useState8[1];
-
-  var _useState9 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])([]),
-      _useState10 = _slicedToArray(_useState9, 2),
-      leavingUser = _useState10[0],
-      setLeavingUser = _useState10[1]; // messages
-
-
-  var _useState11 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(''),
-      _useState12 = _slicedToArray(_useState11, 2),
-      message = _useState12[0],
-      setMessage = _useState12[1];
-
-  var _useState13 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])([]),
-      _useState14 = _slicedToArray(_useState13, 2),
-      messages = _useState14[0],
-      setMessages = _useState14[1];
-
-  var _useState15 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(''),
-      _useState16 = _slicedToArray(_useState15, 2),
-      userWriting = _useState16[0],
-      setUserWriting = _useState16[1];
-
-  var _useState17 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false),
-      _useState18 = _slicedToArray(_useState17, 2),
-      isTyping = _useState18[0],
-      setIsTyping = _useState18[1];
-
-  var _useState19 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(null),
-      _useState20 = _slicedToArray(_useState19, 2),
-      socketMessage = _useState20[0],
-      setSocketMessage = _useState20[1];
-
-  var _useContext = Object(react__WEBPACK_IMPORTED_MODULE_0__["useContext"])(_context_AppContext__WEBPACK_IMPORTED_MODULE_4__["AppContext"]),
-      auth = _useContext.auth;
-
-  var _useState21 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(true),
-      _useState22 = _slicedToArray(_useState21, 2),
-      loading = _useState22[0],
-      setLoading = _useState22[1];
-
-  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
-    setActiveUsers([].concat(_toConsumableArray(activeUsers), [joinedUser]));
-  }, [joinedUser]);
-  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
-    var filter = activeUsers.filter(function (user) {
-      return user.id !== leavingUser.id;
-    });
-    setActiveUsers(filter);
-  }, [leavingUser]);
-  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
-    if (isTyping) {
-      setTimeout(function () {
-        setUserWriting('');
-        clearTimeout(_this);
-        setIsTyping(false);
-      }, 3000);
-    }
-  }, [isTyping]); // On Component Mount :
-
-  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
-    getRoom();
-    var echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_2__["default"]({
-      broadcaster: 'pusher',
-      key: 'd8b949bfb89e354b3e51',
-      cluster: 'eu',
-      forceTLS: false,
-      auth: {
-        headers: {
-          Authorization: "Bearer " + auth.token
-        }
+  /*
+  useEffect(()=> {
+      setActiveUsers([...activeUsers, joinedUser]);
+  },[joinedUser]);
+  useEffect(()=> {
+      let filter = activeUsers.filter(user => user.id !== leavingUser.id)
+      setActiveUsers(filter);
+  },[leavingUser]);
+  useEffect(() => {
+      if(isTyping) {
+          setTimeout(() => {
+              setUserWriting('')
+              clearTimeout(this)
+              setIsTyping(false)
+          },3000)
       }
-    });
-    setMyEcho(echo);
-  }, []);
-  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
-    if (myEcho) {
-      myEcho.join('room.' + props.match.params.id).listen('UserSendMessageEvent', function (e) {
-        setSocketMessage(e.data);
-      }).here(function (users) {
-        setActiveUsers(users);
-      }).joining(function (user) {
-        setJoinedUser(user);
-      }).leaving(function (user) {
-        setLeavingUser(user);
-      }).listenForWhisper('typing', function (e) {
-        setIsTyping(true);
-        setUserWriting(e.name + ' is Typing ...');
+  },[isTyping])
+  */
+  // On Component Mount :
+
+  /*
+  useEffect(() => {
+      getRoom();
+      const echo = new Echo({
+          broadcaster: 'pusher',
+          key: 'd8b949bfb89e354b3e51',
+          cluster: 'eu',
+          forceTLS: false,
+          auth: {
+              headers: {
+                  Authorization : "Bearer " + auth.token,
+              },
+          },
       });
-    }
-  }, [myEcho]);
+      setMyEcho(echo)
+  }, []);
+  useEffect(() => {
+      if(myEcho) {
+          myEcho
+              .join('room.'+ props.match.params.id)
+              .listen('UserSendMessageEvent', (e) => {
+                  setSocketMessage(e.data);
+              })
+              .here(users => {
+                  setActiveUsers(users);
+              })
+              .joining(user => {
+                  setJoinedUser(user);
+              })
+              .leaving(user => {
+                  setLeavingUser(user)
+              })
+              .listenForWhisper('typing', (e) => {
+                  setIsTyping(true);
+                  setUserWriting(e.name  + ' is Typing ...')
+              });
+      }
+  }, [myEcho])
+  */
 
-  var userTyping = function userTyping(e) {
-    setMessage(e.target.value);
-    myEcho.join('room.' + props.match.params.id).whisper('typing', {
-      name: auth.user.name
-    });
-  };
+  /*
+  const userTyping = (e) => {
+      setMessage(e.target.value)
+      myEcho
+          .join('room.'+ props.match.params.id)
+          .whisper('typing', {
+              name: auth.user.name
+          });
+  }
+  */
+
+  /*
+  useEffect(() => {
+      if(socketMessage) {
+          setMessages([...messages,socketMessage]);
+      }
+  }, [socketMessage])
+  */
+
+  /*
+  const getRoom = () => {
+      axios({
+          method:"GET",
+          url: ROOMS_PAGE_API + props.match.params.id,
+          headers : {
+              Authorization : 'bearer ' + auth.token,
+          }
+      })
+          .then(res => {
+              setRoom(res.data.data);
+              getMessages();
+              setLoading(false)
+          })
+          .catch(err => {
+              props.history.push(ROOMS_PAGE);
+              setLoading(false)
+          })
+  }
+  const getMessages = () => {
+      axios({
+          url:ROOMS_PAGE_API+props.match.params.id+'/messages',
+          method:'GET',
+          headers : {
+              authorization : 'bearer '+ auth.token,
+          }
+      })
+          .then(res=> {
+              setMessages(res.data.data);
+          })
+          .catch(err => {
+           })
+  }
+  */
+
+  /*
+  const sendMessage = (e) => {
+      e.preventDefault();
+      if(message === '') {
+          return;
+      }
+      axios({
+          url:ROOMS_PAGE_API+props.match.params.id+'/messages',
+          method:'POST',
+          data: {
+              message,
+          },
+          headers : {
+              authorization : 'bearer '+ auth.token,
+          }
+      })
+          .then(res=> {
+              setMessage('');
+              setMessages([...messages,res.data.data]);
+          })
+          .catch(err => {
+           })
+  }
+   const deleteRoom = () => {
+      axios({
+          url: ROOMS_PAGE_API+ room.id,
+          method : 'DELETE',
+          headers : {
+              authorization: "Bearer "+ auth.token
+          }
+      })
+          .then(res => {
+              props.history.push(ROOMS_PAGE);
+          })
+          .catch(err => {
+              alert('Error Failed To delete!')
+          })
+  }
+  */
+  var dispatch = Object(react_redux__WEBPACK_IMPORTED_MODULE_8__["useDispatch"])();
+
+  var _useSelector = Object(react_redux__WEBPACK_IMPORTED_MODULE_8__["useSelector"])(function (state) {
+    return state.messages;
+  }),
+      loading = _useSelector.loading,
+      messages = _useSelector.messages;
+
+  var _useSelector2 = Object(react_redux__WEBPACK_IMPORTED_MODULE_8__["useSelector"])(function (state) {
+    return state.auth.user;
+  }),
+      user = _useSelector2.user;
+
+  var _useParams = Object(react_router_dom__WEBPACK_IMPORTED_MODULE_7__["useParams"])(),
+      id = _useParams.id;
 
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
-    if (socketMessage) {
-      setMessages([].concat(_toConsumableArray(messages), [socketMessage]));
-    }
-  }, [socketMessage]);
-
-  var getRoom = function getRoom() {
-    axios__WEBPACK_IMPORTED_MODULE_1___default()({
-      method: "GET",
-      url: _urls_AppBaseUrl__WEBPACK_IMPORTED_MODULE_6__["ROOMS_PAGE_API"] + props.match.params.id,
-      headers: {
-        Authorization: 'bearer ' + auth.token
-      }
-    }).then(function (res) {
-      setRoom(res.data.data);
-      getMessages();
-      setLoading(false);
-    })["catch"](function (err) {
-      props.history.push(_urls_AppBaseUrl__WEBPACK_IMPORTED_MODULE_6__["ROOMS_PAGE"]);
-      setLoading(false);
-    });
-  };
-
-  var getMessages = function getMessages() {
-    axios__WEBPACK_IMPORTED_MODULE_1___default()({
-      url: _urls_AppBaseUrl__WEBPACK_IMPORTED_MODULE_6__["ROOMS_PAGE_API"] + props.match.params.id + '/messages',
-      method: 'GET',
-      headers: {
-        authorization: 'bearer ' + auth.token
-      }
-    }).then(function (res) {
-      setMessages(res.data.data);
-    })["catch"](function (err) {});
-  };
-
-  var sendMessage = function sendMessage(e) {
-    e.preventDefault();
-
-    if (message === '') {
-      return;
-    }
-
-    axios__WEBPACK_IMPORTED_MODULE_1___default()({
-      url: _urls_AppBaseUrl__WEBPACK_IMPORTED_MODULE_6__["ROOMS_PAGE_API"] + props.match.params.id + '/messages',
-      method: 'POST',
-      data: {
-        message: message
-      },
-      headers: {
-        authorization: 'bearer ' + auth.token
-      }
-    }).then(function (res) {
-      setMessage('');
-      setMessages([].concat(_toConsumableArray(messages), [res.data.data]));
-    })["catch"](function (err) {});
-  };
-
-  var deleteRoom = function deleteRoom() {
-    axios__WEBPACK_IMPORTED_MODULE_1___default()({
-      url: _urls_AppBaseUrl__WEBPACK_IMPORTED_MODULE_6__["ROOMS_PAGE_API"] + room.id,
-      method: 'DELETE',
-      headers: {
-        authorization: "Bearer " + auth.token
-      }
-    }).then(function (res) {
-      props.history.push(_urls_AppBaseUrl__WEBPACK_IMPORTED_MODULE_6__["ROOMS_PAGE"]);
-    })["catch"](function (err) {
-      alert('Error Failed To delete!');
-    });
-  };
+    dispatch(Object(_actions_MessagesActions__WEBPACK_IMPORTED_MODULE_9__["GET_MESSAGES_ACTION"])(id));
+  }, []);
 
   var renderMessages = function renderMessages() {
     return messages.map(function (message) {
-      if (message.sender_id === auth.user.id) {
+      if (message.sender_id === user.id) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "room-message-box",
           key: message.id
@@ -83576,15 +83659,16 @@ var SingleRoom = function SingleRoom(props) {
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "single-room"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components__WEBPACK_IMPORTED_MODULE_5__["BreadCrumb"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components__WEBPACK_IMPORTED_MODULE_5__["BreadCrumb"].Item, {
-    url: _urls_AppBaseUrl__WEBPACK_IMPORTED_MODULE_6__["DASHBOARD_PAGE"]
-  }, "Dashboard"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components__WEBPACK_IMPORTED_MODULE_5__["BreadCrumb"].Item, {
-    url: _urls_AppBaseUrl__WEBPACK_IMPORTED_MODULE_6__["ROOMS_PAGE"]
-  }, "Public rooms"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components__WEBPACK_IMPORTED_MODULE_5__["BreadCrumb"].Active, null, room.name)), loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components__WEBPACK_IMPORTED_MODULE_5__["Loading"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components__WEBPACK_IMPORTED_MODULE_5__["Loading"].Large, null)) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components__WEBPACK_IMPORTED_MODULE_4__["BreadCrumb"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components__WEBPACK_IMPORTED_MODULE_4__["BreadCrumb"].Item, {
+    url: _urls_AppBaseUrl__WEBPACK_IMPORTED_MODULE_5__["DASHBOARD_PAGE"]
+  }, "Dashboard"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components__WEBPACK_IMPORTED_MODULE_4__["BreadCrumb"].Item, {
+    url: _urls_AppBaseUrl__WEBPACK_IMPORTED_MODULE_5__["ROOMS_PAGE"]
+  }, "Public rooms"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components__WEBPACK_IMPORTED_MODULE_4__["BreadCrumb"].Active, null, "ROOM NAME")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "room-section"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_MessageUsers__WEBPACK_IMPORTED_MODULE_7__["default"], {
-    id: props.match.params.id,
-    activeUsers: activeUsers
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_MessageUsers__WEBPACK_IMPORTED_MODULE_6__["default"], {
+    id: id
+    /*activeUsers={activeUsers}*/
+
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "room-messages"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -83592,10 +83676,10 @@ var SingleRoom = function SingleRoom(props) {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "room-image"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-    src: "/uploads/".concat(room.image)
+    src: "/uploads/room-img"
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "room-name"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, room.name)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "room Name")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "d-flex flex-grow-1"
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "dropleft"
@@ -83606,26 +83690,29 @@ var SingleRoom = function SingleRoom(props) {
     "aria-expanded": "false"
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "dropdown-menu"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_8__["Link"], {
-    to: _urls_AppBaseUrl__WEBPACK_IMPORTED_MODULE_6__["ROOMS_PAGE"] + room.id + '/edit',
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_7__["Link"], {
+    to: _urls_AppBaseUrl__WEBPACK_IMPORTED_MODULE_5__["ROOMS_PAGE"] + id + '/edit',
     className: "dropdown-item"
   }, "Edit"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    onClick: deleteRoom,
+    /*onClick={deleteRoom}*/
     className: "dropdown-item"
   }, "Delete")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "room-message-container"
-  }, renderMessages(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+  }, loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components__WEBPACK_IMPORTED_MODULE_4__["Loading"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components__WEBPACK_IMPORTED_MODULE_4__["Loading"].Large, {
+    color: "#00F"
+  })) : renderMessages(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "message-typing"
-  }, userWriting)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
-    className: "room-message-input",
-    onSubmit: sendMessage
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+    className: "room-message-input"
+    /*onSubmit={sendMessage}*/
+
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-    value: message,
-    onChange: userTyping,
+    //value={message}
+    //onChange={userTyping}
     placeholder: "Write a message ..."
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "send",
-    onClick: sendMessage
+    className: "send" //onClick={sendMessage}
+
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
     className: "fa fa-paper-plane"
   }))))));
@@ -83843,6 +83930,55 @@ var AuthReducer = function AuthReducer() {
 
 /***/ }),
 
+/***/ "./resources/js/my-app/reducers/MessagesReducer.js":
+/*!*********************************************************!*\
+  !*** ./resources/js/my-app/reducers/MessagesReducer.js ***!
+  \*********************************************************/
+/*! exports provided: MessagesReducer */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MessagesReducer", function() { return MessagesReducer; });
+/* harmony import */ var _actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions */ "./resources/js/my-app/actions/index.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+var initState = {
+  messages: [],
+  loading: true
+};
+var MessagesReducer = function MessagesReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initState;
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+
+  switch (action.type) {
+    case _actions__WEBPACK_IMPORTED_MODULE_0__["GET_MESSAGES"]:
+      return _objectSpread(_objectSpread({}, state), {}, {
+        messages: action.payload
+      });
+
+    case _actions__WEBPACK_IMPORTED_MODULE_0__["STOP_MESSAGES_LOADING"]:
+      return _objectSpread(_objectSpread({}, state), {}, {
+        loading: false
+      });
+
+    case _actions__WEBPACK_IMPORTED_MODULE_0__["START_MESSAGES_LOADING"]:
+      return _objectSpread(_objectSpread({}, state), {}, {
+        loading: true
+      });
+
+    default:
+      return state;
+  }
+};
+
+/***/ }),
+
 /***/ "./resources/js/my-app/reducers/PopupsReducer.js":
 /*!*******************************************************!*\
   !*** ./resources/js/my-app/reducers/PopupsReducer.js ***!
@@ -83956,6 +84092,31 @@ var RoomsReducer = function RoomsReducer() {
 
 /***/ }),
 
+/***/ "./resources/js/my-app/reducers/UsersReducer.js":
+/*!******************************************************!*\
+  !*** ./resources/js/my-app/reducers/UsersReducer.js ***!
+  \******************************************************/
+/*! exports provided: UsersReducer */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UsersReducer", function() { return UsersReducer; });
+var initState = {
+  users: []
+};
+var UsersReducer = function UsersReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initState;
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+
+  switch (action.type) {
+    default:
+      return state;
+  }
+};
+
+/***/ }),
+
 /***/ "./resources/js/my-app/reducers/index.js":
 /*!***********************************************!*\
   !*** ./resources/js/my-app/reducers/index.js ***!
@@ -83969,6 +84130,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _AuthReducer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AuthReducer */ "./resources/js/my-app/reducers/AuthReducer.js");
 /* harmony import */ var _RoomsReducer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./RoomsReducer */ "./resources/js/my-app/reducers/RoomsReducer.js");
 /* harmony import */ var _PopupsReducer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./PopupsReducer */ "./resources/js/my-app/reducers/PopupsReducer.js");
+/* harmony import */ var _MessagesReducer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./MessagesReducer */ "./resources/js/my-app/reducers/MessagesReducer.js");
+/* harmony import */ var _UsersReducer__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./UsersReducer */ "./resources/js/my-app/reducers/UsersReducer.js");
+
+
 
 
 
@@ -83976,7 +84141,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = (Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"])({
   auth: _AuthReducer__WEBPACK_IMPORTED_MODULE_1__["AuthReducer"],
   rooms: _RoomsReducer__WEBPACK_IMPORTED_MODULE_2__["RoomsReducer"],
-  popup: _PopupsReducer__WEBPACK_IMPORTED_MODULE_3__["PopupsReducer"]
+  popup: _PopupsReducer__WEBPACK_IMPORTED_MODULE_3__["PopupsReducer"],
+  messages: _MessagesReducer__WEBPACK_IMPORTED_MODULE_4__["MessagesReducer"],
+  users: _UsersReducer__WEBPACK_IMPORTED_MODULE_5__["UsersReducer"]
 }));
 
 /***/ }),

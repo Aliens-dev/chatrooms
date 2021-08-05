@@ -19,7 +19,17 @@ export const STOP_BUTTON_LOADING = 'STOP_BUTTON_LOADING'
 export const START_LOADING = 'START_LOADING'
 export const STOP_LOADING = 'STOP_LOADING'
 
+// Messages Actions
+
+export const GET_MESSAGES = 'GET_MESSAGES';
+export const START_MESSAGES_LOADING = 'START_MESSAGES_LOADING';
+export const STOP_MESSAGES_LOADING = 'STOP_MESSAGES_LOADING';
 
 // Rooms Actions
 
 export const GET_ROOMS = 'GET_ROOMS'
+
+
+//  Users Actions
+
+export const GET_USERS = 'GET_USERS'

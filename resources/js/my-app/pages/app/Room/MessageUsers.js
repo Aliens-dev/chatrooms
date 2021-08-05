@@ -1,13 +1,6 @@
 import React, {useContext, useState, useEffect} from 'react';
 import UserIcon from "../../../components/UserIcon";
-import {
-    setModalHiddenAction,
-    setModalVisibleAction,
-    setToastMessage,
-    setToastShowAction
-} from "../../../context/actions/GlobalActions";
 import axios from "axios";
-import {AppContext} from "../../../context/AppContext";
 import Modal from '../../../components/Modal'
 import {PROFILE_PAGE_API, ROOMS_PAGE_API} from "../../../urls/AppBaseUrl";
 
@@ -17,7 +10,6 @@ const MessageUsers = (props) => {
     // Search for users ...
     const [users,setUsers] = useState([]);
     const [searchUser,setSearchUser] = useState('');
-    const {auth,dispatchGlobalState} = useContext(AppContext);
 
     useEffect(() => {
         getMembers();
