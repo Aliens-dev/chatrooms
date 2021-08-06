@@ -80129,10 +80129,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+var composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || redux__WEBPACK_IMPORTED_MODULE_4__["compose"];
 
 var App = function App() {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_redux__WEBPACK_IMPORTED_MODULE_3__["Provider"], {
-    store: Object(redux__WEBPACK_IMPORTED_MODULE_4__["createStore"])(_reducers__WEBPACK_IMPORTED_MODULE_5__["default"], Object(redux__WEBPACK_IMPORTED_MODULE_4__["applyMiddleware"])(redux_thunk__WEBPACK_IMPORTED_MODULE_6__["default"]))
+    store: Object(redux__WEBPACK_IMPORTED_MODULE_4__["createStore"])(_reducers__WEBPACK_IMPORTED_MODULE_5__["default"], composeEnhancers(Object(redux__WEBPACK_IMPORTED_MODULE_4__["applyMiddleware"])(redux_thunk__WEBPACK_IMPORTED_MODULE_6__["default"])))
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_routes__WEBPACK_IMPORTED_MODULE_2__["default"], null));
 };
 
@@ -80194,27 +80195,26 @@ var GET_MESSAGES_ACTION = function GET_MESSAGES_ACTION(roomId) {
 
             case 3:
               res = _context.sent;
-              console.log(res);
               dispatch({
                 type: _index__WEBPACK_IMPORTED_MODULE_2__["GET_MESSAGES"],
                 payload: res.data.data
               });
               dispatch(STOP_MESSAGES_LOADING_ACTION()); // handle Success
 
-              _context.next = 12;
+              _context.next = 11;
               break;
 
-            case 9:
-              _context.prev = 9;
+            case 8:
+              _context.prev = 8;
               _context.t0 = _context["catch"](0);
               dispatch(STOP_MESSAGES_LOADING_ACTION()); // handle this
 
-            case 12:
+            case 11:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, null, [[0, 9]]);
+      }, _callee, null, [[0, 8]]);
     }));
 
     return function (_x, _x2) {
@@ -80441,7 +80441,7 @@ var LOGIN_SUCCESS_ACTION = function LOGIN_SUCCESS_ACTION() {
 /*!**********************************************!*\
   !*** ./resources/js/my-app/actions/index.js ***!
   \**********************************************/
-/*! exports provided: LOGIN, LOGOUT, LOGIN_SUCCESS, LOGIN_FAILED, SHOW_MODAL, HIDE_MODAL, SHOW_TOAST, HIDE_TOAST, TOAST_MESSAGE, TOGGLE_SIDEBAR_CLASS, START_BUTTON_LOADING, STOP_BUTTON_LOADING, START_LOADING, STOP_LOADING, GET_MESSAGES, START_MESSAGES_LOADING, STOP_MESSAGES_LOADING, GET_ROOMS, GET_USERS */
+/*! exports provided: LOGIN, LOGOUT, LOGIN_SUCCESS, LOGIN_FAILED, SHOW_MODAL, HIDE_MODAL, SHOW_TOAST, HIDE_TOAST, TOAST_MESSAGE, TOGGLE_SIDEBAR_CLASS, START_BUTTON_LOADING, STOP_BUTTON_LOADING, START_LOADING, STOP_LOADING, GET_MESSAGES, START_MESSAGES_LOADING, STOP_MESSAGES_LOADING, GET_ROOMS, GET_ROOM_MEMBERS, START_ROOM_MEMBERS_LOADING, STOP_ROOM_MEMBERS_LOADING, ADD_ROOM_SUCCESS, ADD_ROOM_FAILS, GET_USERS, GET_ROOM_USERS, RESET_ROOM_USERS */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -80464,7 +80464,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "START_MESSAGES_LOADING", function() { return START_MESSAGES_LOADING; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "STOP_MESSAGES_LOADING", function() { return STOP_MESSAGES_LOADING; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GET_ROOMS", function() { return GET_ROOMS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GET_ROOM_MEMBERS", function() { return GET_ROOM_MEMBERS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "START_ROOM_MEMBERS_LOADING", function() { return START_ROOM_MEMBERS_LOADING; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "STOP_ROOM_MEMBERS_LOADING", function() { return STOP_ROOM_MEMBERS_LOADING; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ADD_ROOM_SUCCESS", function() { return ADD_ROOM_SUCCESS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ADD_ROOM_FAILS", function() { return ADD_ROOM_FAILS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GET_USERS", function() { return GET_USERS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GET_ROOM_USERS", function() { return GET_ROOM_USERS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RESET_ROOM_USERS", function() { return RESET_ROOM_USERS; });
 // Auth Related Actions
 var LOGIN = 'LOGIN';
 var LOGOUT = 'LOGOUT';
@@ -80486,9 +80493,16 @@ var GET_MESSAGES = 'GET_MESSAGES';
 var START_MESSAGES_LOADING = 'START_MESSAGES_LOADING';
 var STOP_MESSAGES_LOADING = 'STOP_MESSAGES_LOADING'; // Rooms Actions
 
-var GET_ROOMS = 'GET_ROOMS'; //  Users Actions
+var GET_ROOMS = 'GET_ROOMS';
+var GET_ROOM_MEMBERS = 'GET_ROOM_MEMBERS';
+var START_ROOM_MEMBERS_LOADING = 'START_ROOM_MEMBERS_LOADING';
+var STOP_ROOM_MEMBERS_LOADING = 'STOP_ROOM_MEMBERS_LOADING';
+var ADD_ROOM_SUCCESS = 'ADD_ROOM_SUCCESS';
+var ADD_ROOM_FAILS = 'ADD_ROOM_FAILS'; //  Users Actions
 
 var GET_USERS = 'GET_USERS';
+var GET_ROOM_USERS = 'GET_ROOM_USERS';
+var RESET_ROOM_USERS = 'RESET_ROOM_USERS';
 
 /***/ }),
 
@@ -80550,12 +80564,20 @@ var STOP_BUTTON_LOADING_ACTION = function STOP_BUTTON_LOADING_ACTION() {
 /*!*****************************************************!*\
   !*** ./resources/js/my-app/actions/roomsActions.js ***!
   \*****************************************************/
-/*! exports provided: GET_ROOMS_ACTION */
+/*! exports provided: GET_ROOMS_ACTION, ADD_ROOM_ACTION, ADD_ROOM_SUCCESS_ACTION, ADD_ROOM_FAILS_ACTION, STOP_ROOM_MEMBERS_LOADING_ACTION, START_ROOM_MEMBERS_LOADING_ACTION, GET_ROOM_MEMBERS_ACTION, REMOVE_ROOM_MEMBER_ACTION, REMOVE_ROOM_ACTION */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GET_ROOMS_ACTION", function() { return GET_ROOMS_ACTION; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ADD_ROOM_ACTION", function() { return ADD_ROOM_ACTION; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ADD_ROOM_SUCCESS_ACTION", function() { return ADD_ROOM_SUCCESS_ACTION; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ADD_ROOM_FAILS_ACTION", function() { return ADD_ROOM_FAILS_ACTION; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "STOP_ROOM_MEMBERS_LOADING_ACTION", function() { return STOP_ROOM_MEMBERS_LOADING_ACTION; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "START_ROOM_MEMBERS_LOADING_ACTION", function() { return START_ROOM_MEMBERS_LOADING_ACTION; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GET_ROOM_MEMBERS_ACTION", function() { return GET_ROOM_MEMBERS_ACTION; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "REMOVE_ROOM_MEMBER_ACTION", function() { return REMOVE_ROOM_MEMBER_ACTION; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "REMOVE_ROOM_ACTION", function() { return REMOVE_ROOM_ACTION; });
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
@@ -80621,6 +80643,279 @@ var GET_ROOMS_ACTION = function GET_ROOMS_ACTION() {
       return _ref.apply(this, arguments);
     };
   }();
+};
+var ADD_ROOM_ACTION = function ADD_ROOM_ACTION(formData) {
+  return /*#__PURE__*/function () {
+    var _ref2 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(dispatch, getState) {
+      var res;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              _context2.prev = 0;
+              _context2.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default()({
+                method: 'POST',
+                url: _urls_AppBaseUrl__WEBPACK_IMPORTED_MODULE_2__["ROOMS_PAGE_API"],
+                data: formData,
+                headers: {
+                  authorization: "Bearer " + getState().auth.user.token,
+                  "Content-Type": 'multipart/form-data'
+                }
+              });
+
+            case 3:
+              res = _context2.sent;
+              dispatch(Object(_popupsActions__WEBPACK_IMPORTED_MODULE_4__["SHOW_TOAST_ACTION"])("success", "new room added is Added"));
+              dispatch(ADD_ROOM_SUCCESS_ACTION()); //props.history.push(ROOMS_PAGE)
+
+              _context2.next = 12;
+              break;
+
+            case 8:
+              _context2.prev = 8;
+              _context2.t0 = _context2["catch"](0);
+              dispatch(Object(_popupsActions__WEBPACK_IMPORTED_MODULE_4__["SHOW_TOAST_ACTION"])('Error, try again', "failed to add new room"));
+              dispatch(ADD_ROOM_FAILS_ACTION());
+
+            case 12:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2, null, [[0, 8]]);
+    }));
+
+    return function (_x3, _x4) {
+      return _ref2.apply(this, arguments);
+    };
+  }();
+};
+var ADD_ROOM_SUCCESS_ACTION = function ADD_ROOM_SUCCESS_ACTION() {
+  return {
+    type: _index__WEBPACK_IMPORTED_MODULE_3__["ADD_ROOM_SUCCESS"]
+  };
+};
+var ADD_ROOM_FAILS_ACTION = function ADD_ROOM_FAILS_ACTION() {
+  return {
+    type: _index__WEBPACK_IMPORTED_MODULE_3__["ADD_ROOM_FAILS"]
+  };
+};
+var STOP_ROOM_MEMBERS_LOADING_ACTION = function STOP_ROOM_MEMBERS_LOADING_ACTION() {
+  return {
+    type: _index__WEBPACK_IMPORTED_MODULE_3__["STOP_ROOM_MEMBERS_LOADING"]
+  };
+};
+var START_ROOM_MEMBERS_LOADING_ACTION = function START_ROOM_MEMBERS_LOADING_ACTION() {
+  return {
+    type: _index__WEBPACK_IMPORTED_MODULE_3__["START_ROOM_MEMBERS_LOADING"]
+  };
+};
+var GET_ROOM_MEMBERS_ACTION = function GET_ROOM_MEMBERS_ACTION(roomId) {
+  return /*#__PURE__*/function () {
+    var _ref3 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(dispatch, getState) {
+      var res;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+        while (1) {
+          switch (_context3.prev = _context3.next) {
+            case 0:
+              _context3.prev = 0;
+              _context3.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default()({
+                method: "GET",
+                url: _urls_AppBaseUrl__WEBPACK_IMPORTED_MODULE_2__["ROOMS_PAGE_API"] + roomId + '/users',
+                headers: {
+                  Authorization: 'bearer ' + getState().auth.user.token
+                }
+              });
+
+            case 3:
+              res = _context3.sent;
+              dispatch({
+                type: _index__WEBPACK_IMPORTED_MODULE_3__["GET_ROOM_MEMBERS"],
+                payload: {
+                  roomId: roomId,
+                  members: res.data.data
+                }
+              });
+              dispatch(STOP_ROOM_MEMBERS_LOADING_ACTION());
+              _context3.next = 11;
+              break;
+
+            case 8:
+              _context3.prev = 8;
+              _context3.t0 = _context3["catch"](0);
+              dispatch(STOP_ROOM_MEMBERS_LOADING_ACTION());
+
+            case 11:
+            case "end":
+              return _context3.stop();
+          }
+        }
+      }, _callee3, null, [[0, 8]]);
+    }));
+
+    return function (_x5, _x6) {
+      return _ref3.apply(this, arguments);
+    };
+  }();
+};
+var REMOVE_ROOM_MEMBER_ACTION = function REMOVE_ROOM_MEMBER_ACTION(roomId, member) {
+  return /*#__PURE__*/function () {
+    var _ref4 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4(dispatch, getState) {
+      var res;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+        while (1) {
+          switch (_context4.prev = _context4.next) {
+            case 0:
+              _context4.prev = 0;
+              _context4.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default()({
+                method: "DELETE",
+                url: _urls_AppBaseUrl__WEBPACK_IMPORTED_MODULE_2__["ROOMS_PAGE_API"] + roomId + '/users/' + member.id,
+                headers: {
+                  authorization: "bearer " + getState().auth.user.token
+                }
+              });
+
+            case 3:
+              res = _context4.sent;
+              dispatch(Object(_popupsActions__WEBPACK_IMPORTED_MODULE_4__["SHOW_TOAST_ACTION"])('Member successfully removed', "".concat(member.name, " is removed")));
+              dispatch(GET_ROOM_MEMBERS_ACTION(roomId));
+              _context4.next = 11;
+              break;
+
+            case 8:
+              _context4.prev = 8;
+              _context4.t0 = _context4["catch"](0);
+              dispatch(Object(_popupsActions__WEBPACK_IMPORTED_MODULE_4__["SHOW_TOAST_ACTION"])("Error, failed to remove", "User failed to remove, try again"));
+
+            case 11:
+            case "end":
+              return _context4.stop();
+          }
+        }
+      }, _callee4, null, [[0, 8]]);
+    }));
+
+    return function (_x7, _x8) {
+      return _ref4.apply(this, arguments);
+    };
+  }();
+};
+var REMOVE_ROOM_ACTION = function REMOVE_ROOM_ACTION(roomId) {
+  return /*#__PURE__*/function () {
+    var _ref5 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5(dispatch, getState) {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+        while (1) {
+          switch (_context5.prev = _context5.next) {
+            case 0:
+              try {
+                axios__WEBPACK_IMPORTED_MODULE_1___default()({
+                  url: _urls_AppBaseUrl__WEBPACK_IMPORTED_MODULE_2__["ROOMS_PAGE_API"] + roomId,
+                  method: 'DELETE',
+                  headers: {
+                    authorization: "Bearer " + getState().auth.user.token
+                  }
+                });
+                dispatch(Object(_popupsActions__WEBPACK_IMPORTED_MODULE_4__["SHOW_TOAST_ACTION"])("Room successfully removed", "room is removed"));
+                dispatch(GET_ROOMS_ACTION());
+              } catch (e) {
+                dispatch(Object(_popupsActions__WEBPACK_IMPORTED_MODULE_4__["SHOW_TOAST_ACTION"])("Error, try again", "failed to remove room"));
+              }
+
+            case 1:
+            case "end":
+              return _context5.stop();
+          }
+        }
+      }, _callee5);
+    }));
+
+    return function (_x9, _x10) {
+      return _ref5.apply(this, arguments);
+    };
+  }();
+};
+
+/***/ }),
+
+/***/ "./resources/js/my-app/actions/usersActions.js":
+/*!*****************************************************!*\
+  !*** ./resources/js/my-app/actions/usersActions.js ***!
+  \*****************************************************/
+/*! exports provided: GET_ROOM_USERS_ACTION, RESET_ROOM_USERS_ACTION */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GET_ROOM_USERS_ACTION", function() { return GET_ROOM_USERS_ACTION; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RESET_ROOM_USERS_ACTION", function() { return RESET_ROOM_USERS_ACTION; });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _urls_AppBaseUrl__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../urls/AppBaseUrl */ "./resources/js/my-app/urls/AppBaseUrl.js");
+/* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./index */ "./resources/js/my-app/actions/index.js");
+
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
+
+
+var GET_ROOM_USERS_ACTION = function GET_ROOM_USERS_ACTION(roomId) {
+  return /*#__PURE__*/function () {
+    var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(dispatch, getState) {
+      var res;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _context.prev = 0;
+              _context.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default()({
+                method: "GET",
+                url: _urls_AppBaseUrl__WEBPACK_IMPORTED_MODULE_2__["ROOMS_PAGE_API"] + roomId + '/users',
+                headers: {
+                  Authorization: 'bearer ' + getState().auth.user.token
+                }
+              });
+
+            case 3:
+              res = _context.sent;
+              dispatch({
+                type: _index__WEBPACK_IMPORTED_MODULE_3__["GET_ROOM_USERS"],
+                payload: _defineProperty({}, roomId, res.data.data)
+              });
+              _context.next = 9;
+              break;
+
+            case 7:
+              _context.prev = 7;
+              _context.t0 = _context["catch"](0);
+
+            case 9:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee, null, [[0, 7]]);
+    }));
+
+    return function (_x, _x2) {
+      return _ref.apply(this, arguments);
+    };
+  }();
+};
+var RESET_ROOM_USERS_ACTION = function RESET_ROOM_USERS_ACTION() {
+  return {
+    type: _index__WEBPACK_IMPORTED_MODULE_3__["RESET_ROOM_USERS"]
+  };
 };
 
 /***/ }),
@@ -80714,23 +81009,35 @@ var Modal = function Modal(props) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _actions_popupsActions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../actions/popupsActions */ "./resources/js/my-app/actions/popupsActions.js");
+
+
 
 
 var MyToast = function MyToast(props) {
+  var dispatch = Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["useDispatch"])();
+
+  var _useSelector = Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["useSelector"])(function (state) {
+    return state.popup;
+  }),
+      showToast = _useSelector.showToast,
+      toastMessage = _useSelector.toastMessage;
+
   var hideToast = function hideToast() {
-    dispatchGlobalState(setToastHiddenAction());
+    dispatch(Object(_actions_popupsActions__WEBPACK_IMPORTED_MODULE_2__["HIDE_TOAST_ACTION"])());
   };
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "".concat(globalState.showToast ? 'my-toast' : 'd-none')
+    className: "".concat(showToast ? 'my-toast' : 'd-none')
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "my-toast-header"
-  }, globalState.toastMessage.header, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+  }, toastMessage.title, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
     className: "fa fa-times close-toast",
     onClick: hideToast
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "my-toast-body"
-  }, globalState.toastMessage.body));
+  }, toastMessage.message));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (MyToast);
@@ -82271,7 +82578,7 @@ var Index = function Index() {
     className: "app-page"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_containers_Sidebar__WEBPACK_IMPORTED_MODULE_4__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "page-content"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_containers_Navbar__WEBPACK_IMPORTED_MODULE_3__["default"], null), Object(_routes_AppRoutes__WEBPACK_IMPORTED_MODULE_1__["default"])()));
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_containers_Navbar__WEBPACK_IMPORTED_MODULE_3__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Toast__WEBPACK_IMPORTED_MODULE_2__["default"], null), Object(_routes_AppRoutes__WEBPACK_IMPORTED_MODULE_1__["default"])()));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Index);
@@ -82829,8 +83136,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _context_AppContext__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../context/AppContext */ "./resources/js/my-app/context/AppContext.js");
 /* harmony import */ var _components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../components */ "./resources/js/my-app/components/index.js");
 /* harmony import */ var _components_UserIcon__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../components/UserIcon */ "./resources/js/my-app/components/UserIcon.js");
-/* harmony import */ var _context_actions_GlobalActions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../context/actions/GlobalActions */ "./resources/js/my-app/context/actions/GlobalActions.js");
-/* harmony import */ var _urls_AppBaseUrl__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../urls/AppBaseUrl */ "./resources/js/my-app/urls/AppBaseUrl.js");
+/* harmony import */ var _urls_AppBaseUrl__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../urls/AppBaseUrl */ "./resources/js/my-app/urls/AppBaseUrl.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _actions_roomsActions__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../actions/roomsActions */ "./resources/js/my-app/actions/roomsActions.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -82856,6 +83164,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
+
 var AddRoom = function AddRoom(props) {
   var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])({
     type: 0
@@ -82871,14 +83180,15 @@ var AddRoom = function AddRoom(props) {
       previewAvatar = _useState4[0],
       setPreviewAvatar = _useState4[1];
 
-  var _useContext = Object(react__WEBPACK_IMPORTED_MODULE_0__["useContext"])(_context_AppContext__WEBPACK_IMPORTED_MODULE_1__["AppContext"]),
-      auth = _useContext.auth,
-      dispatchGlobalState = _useContext.dispatchGlobalState;
-
   var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(0),
       _useState6 = _slicedToArray(_useState5, 2),
       progress = _useState6[0],
       setProgress = _useState6[1];
+
+  var dispatch = Object(react_redux__WEBPACK_IMPORTED_MODULE_5__["useDispatch"])();
+  var addRoomSuccess = Object(react_redux__WEBPACK_IMPORTED_MODULE_5__["useSelector"])(function (state) {
+    return state.rooms.addRoomSuccess;
+  });
 
   var chooseAvatar = function chooseAvatar(e) {
     e.preventDefault();
@@ -82892,35 +83202,26 @@ var AddRoom = function AddRoom(props) {
     setPreviewAvatar(URL.createObjectURL(avatarBtn.current.files[0]));
   };
 
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    if (addRoomSuccess) {
+      props.history.push(_urls_AppBaseUrl__WEBPACK_IMPORTED_MODULE_4__["ROOMS_PAGE"]);
+    }
+  }, [addRoomSuccess]);
+
   var addRoom = function addRoom() {
     var formData = new FormData();
     formData.append('name', room.name);
     formData.append('image', room.image);
     formData.append('type', room.type);
-    axios({
-      method: 'POST',
-      url: _urls_AppBaseUrl__WEBPACK_IMPORTED_MODULE_5__["ROOMS_PAGE_API"],
-      data: formData,
-      headers: {
-        authorization: "Bearer " + auth.token,
-        "Content-Type": 'multipart/form-data'
-      }
-    }).then(function (res) {
-      dispatchGlobalState(Object(_context_actions_GlobalActions__WEBPACK_IMPORTED_MODULE_4__["setToastShowAction"])());
-      dispatchGlobalState(Object(_context_actions_GlobalActions__WEBPACK_IMPORTED_MODULE_4__["setToastMessage"])("Room added successfully", "".concat(room.name, " is Added")));
-      props.history.push(_urls_AppBaseUrl__WEBPACK_IMPORTED_MODULE_5__["ROOMS_PAGE"]);
-    })["catch"](function (err) {
-      dispatchGlobalState(Object(_context_actions_GlobalActions__WEBPACK_IMPORTED_MODULE_4__["setToastShowAction"])());
-      dispatchGlobalState(Object(_context_actions_GlobalActions__WEBPACK_IMPORTED_MODULE_4__["setToastMessage"])("Error, failed to add", "".concat(room.name, " failed to add")));
-    });
+    dispatch(Object(_actions_roomsActions__WEBPACK_IMPORTED_MODULE_6__["ADD_ROOM_ACTION"])(formData));
   };
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "room-page"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components__WEBPACK_IMPORTED_MODULE_2__["BreadCrumb"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components__WEBPACK_IMPORTED_MODULE_2__["BreadCrumb"].Item, {
-    url: _urls_AppBaseUrl__WEBPACK_IMPORTED_MODULE_5__["APP_URL"]
+    url: _urls_AppBaseUrl__WEBPACK_IMPORTED_MODULE_4__["APP_URL"]
   }, "Dashboard"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components__WEBPACK_IMPORTED_MODULE_2__["BreadCrumb"].Item, {
-    url: _urls_AppBaseUrl__WEBPACK_IMPORTED_MODULE_5__["ROOMS_PAGE"]
+    url: _urls_AppBaseUrl__WEBPACK_IMPORTED_MODULE_4__["ROOMS_PAGE"]
   }, "Rooms"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components__WEBPACK_IMPORTED_MODULE_2__["BreadCrumb"].Active, null, "Add Room")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components__WEBPACK_IMPORTED_MODULE_2__["Card"], {
     style: {
       width: "500px",
@@ -83220,17 +83521,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _components_Modal__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../components/Modal */ "./resources/js/my-app/components/Modal.js");
 /* harmony import */ var _urls_AppBaseUrl__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../urls/AppBaseUrl */ "./resources/js/my-app/urls/AppBaseUrl.js");
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _actions_roomsActions__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../actions/roomsActions */ "./resources/js/my-app/actions/roomsActions.js");
+/* harmony import */ var _components_loading_index__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../components/loading/index */ "./resources/js/my-app/components/loading/index.js");
 
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
-
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
@@ -83239,99 +83534,94 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 var MessageUsers = function MessageUsers(props) {
-  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])([]),
-      _useState2 = _slicedToArray(_useState, 2),
-      members = _useState2[0],
-      setMembers = _useState2[1]; // Search for users ...
+  var dispatch = Object(react_redux__WEBPACK_IMPORTED_MODULE_5__["useDispatch"])();
 
-
-  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])([]),
-      _useState4 = _slicedToArray(_useState3, 2),
-      users = _useState4[0],
-      setUsers = _useState4[1];
-
-  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(''),
-      _useState6 = _slicedToArray(_useState5, 2),
-      searchUser = _useState6[0],
-      setSearchUser = _useState6[1];
+  var _useSelector = Object(react_redux__WEBPACK_IMPORTED_MODULE_5__["useSelector"])(function (state) {
+    return state.rooms;
+  }),
+      membersLoading = _useSelector.membersLoading,
+      roomMembers = _useSelector.roomMembers;
 
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
-    getMembers();
-  }, []);
-  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
-    if (searchUser !== '') {
-      axios__WEBPACK_IMPORTED_MODULE_2___default()({
-        url: _urls_AppBaseUrl__WEBPACK_IMPORTED_MODULE_4__["PROFILE_PAGE_API"],
-        method: 'GET',
-        params: {
-          email: searchUser
-        },
-        headers: {
-          Authorization: 'bearer ' + auth.token
-        }
-      }).then(function (res) {
-        setUsers(res.data.data);
-      })["catch"](function (err) {});
-    } else {
-      setUsers([]);
-    }
-  }, [searchUser]);
+    dispatch(Object(_actions_roomsActions__WEBPACK_IMPORTED_MODULE_6__["GET_ROOM_MEMBERS_ACTION"])(props.id));
+  }, []); // const [members,setMembers] = useState([]);
+  // Search for users ...
+
+  /*
+  useEffect(() => {
+      getMembers();
+  },[])
+   useEffect(() => {
+      if(searchUser !== '') {
+          axios({
+              url: PROFILE_PAGE_API,
+              method: 'GET',
+              params: {
+                  email : searchUser,
+              },
+              headers : {
+                  Authorization: 'bearer ' + auth.token,
+              }
+          })
+              .then(res => {
+                  setUsers(res.data.data);
+              })
+              .catch(err => {
+               })
+      }else {
+          setUsers([]);
+      }
+  }, [searchUser])
+  */
 
   var removeUser = function removeUser(user) {
-    axios__WEBPACK_IMPORTED_MODULE_2___default()({
-      method: "DELETE",
-      url: _urls_AppBaseUrl__WEBPACK_IMPORTED_MODULE_4__["ROOMS_PAGE_API"] + props.id + '/users/' + user.id,
-      headers: {
-        authorization: "bearer " + auth.token
-      }
-    }).then(function (res) {
-      dispatchGlobalState(setToastShowAction());
-      dispatchGlobalState(setToastMessage("User successfully removed", "".concat(user.name, " is removed")));
-      getMembers();
-    })["catch"](function (err) {
-      dispatchGlobalState(setToastShowAction());
-      dispatchGlobalState(setToastMessage("Error, failed to remove", "User failed to remove"));
-    });
+    dispatch(Object(_actions_roomsActions__WEBPACK_IMPORTED_MODULE_6__["REMOVE_ROOM_MEMBER_ACTION"])(props.id, user));
   }; // Get Room users ...
 
+  /*
+  const getMembers = () => {
+      axios({
+          method:"GET",
+          url: ROOMS_PAGE_API + props.id + '/users',
+          headers : {
+              Authorization : 'bearer ' + auth.token,
+          }
+      })
+          .then(res => {
+              setMembers(res.data.data);
+          })
+          .catch(err => {
+              console.log('error');
+          })
+  }
+  */
 
-  var getMembers = function getMembers() {
-    axios__WEBPACK_IMPORTED_MODULE_2___default()({
-      method: "GET",
-      url: _urls_AppBaseUrl__WEBPACK_IMPORTED_MODULE_4__["ROOMS_PAGE_API"] + props.id + '/users',
-      headers: {
-        Authorization: 'bearer ' + auth.token
-      }
-    }).then(function (res) {
-      setMembers(res.data.data);
-    })["catch"](function (err) {
-      console.log('error');
-    });
-  }; // add a member to the group
+  /*
+  // add a member to the group
+  const addUser  = () => {
+      let selectedUser = users.find(user => user.email === searchUser);
+      axios({
+          url: ROOMS_PAGE_API + props.id+'/users/'+ selectedUser.id,
+          method:'POST',
+          headers : {
+              authorization : 'bearer ' + auth.token,
+          }
+      })
+          .then(res => {
+              getMembers();
+              dispatchGlobalState(setModalHiddenAction());
+              dispatchGlobalState(setToastShowAction())
+              dispatchGlobalState(setToastMessage("User successfully added",`${selectedUser.name} added`))
+              setSearchUser('');
+              setUsers([])
+          })
+          .catch(err => {
+              dispatchGlobalState(setToastShowAction())
+              dispatchGlobalState(setToastMessage("Error, failed to add",`User failed to add`))
+          })
+  }
+  */
 
-
-  var addUser = function addUser() {
-    var selectedUser = users.find(function (user) {
-      return user.email === searchUser;
-    });
-    axios__WEBPACK_IMPORTED_MODULE_2___default()({
-      url: _urls_AppBaseUrl__WEBPACK_IMPORTED_MODULE_4__["ROOMS_PAGE_API"] + props.id + '/users/' + selectedUser.id,
-      method: 'POST',
-      headers: {
-        authorization: 'bearer ' + auth.token
-      }
-    }).then(function (res) {
-      getMembers();
-      dispatchGlobalState(setModalHiddenAction());
-      dispatchGlobalState(setToastShowAction());
-      dispatchGlobalState(setToastMessage("User successfully added", "".concat(selectedUser.name, " added")));
-      setSearchUser('');
-      setUsers([]);
-    })["catch"](function (err) {
-      dispatchGlobalState(setToastShowAction());
-      dispatchGlobalState(setToastMessage("Error, failed to add", "User failed to add"));
-    });
-  };
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "room-users"
@@ -83344,7 +83634,9 @@ var MessageUsers = function MessageUsers(props) {
     className: "fa fa-search"
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "room-users-list"
-  }, members.map(function (member) {
+  }, membersLoading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_loading_index__WEBPACK_IMPORTED_MODULE_7__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_loading_index__WEBPACK_IMPORTED_MODULE_7__["default"].Large, {
+    color: "#00F"
+  })) : roomMembers.members.map(function (member) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "room-user",
       key: member.id
@@ -83354,11 +83646,7 @@ var MessageUsers = function MessageUsers(props) {
       className: "user-info"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "username"
-    }, member.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "".concat(props.activeUsers.some(function (user) {
-        return user.id === member.id;
-      }) && 'active-user')
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    }, member.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "dropdown"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
       className: "fa fa-ellipsis-h",
@@ -83373,34 +83661,9 @@ var MessageUsers = function MessageUsers(props) {
     }, "remove")))));
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "room-controls"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    onClick: function onClick() {
-      return dispatchGlobalState(setModalVisibleAction());
-    }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
     className: "fa fa-plus"
-  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Modal__WEBPACK_IMPORTED_MODULE_3__["default"], {
-    title: "Add User",
-    onClick: addUser
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "add-user"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-    value: searchUser,
-    onChange: function onChange(e) {
-      return setSearchUser(e.target.value);
-    },
-    placeholder: "search for user ..."
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "search-users-list"
-  }, users.map(function (user) {
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "search-user",
-      key: user.id,
-      onClick: function onClick() {
-        return setSearchUser(user.email);
-      }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, user.email));
-  })))));
+  }))));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (MessageUsers);
@@ -83733,18 +83996,13 @@ var SingleRoom = function SingleRoom(props) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components */ "./resources/js/my-app/components/index.js");
-/* harmony import */ var _context_AppContext__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../context/AppContext */ "./resources/js/my-app/context/AppContext.js");
-/* harmony import */ var _components_UserIcon__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../components/UserIcon */ "./resources/js/my-app/components/UserIcon.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
-/* harmony import */ var _context_actions_GlobalActions__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../context/actions/GlobalActions */ "./resources/js/my-app/context/actions/GlobalActions.js");
-/* harmony import */ var _urls_AppBaseUrl__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../urls/AppBaseUrl */ "./resources/js/my-app/urls/AppBaseUrl.js");
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var _actions_roomsActions__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../actions/roomsActions */ "./resources/js/my-app/actions/roomsActions.js");
-
-
+/* harmony import */ var _components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components */ "./resources/js/my-app/components/index.js");
+/* harmony import */ var _components_UserIcon__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/UserIcon */ "./resources/js/my-app/components/UserIcon.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _urls_AppBaseUrl__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../urls/AppBaseUrl */ "./resources/js/my-app/urls/AppBaseUrl.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _actions_roomsActions__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../actions/roomsActions */ "./resources/js/my-app/actions/roomsActions.js");
+/* harmony import */ var _actions_usersActions__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../actions/usersActions */ "./resources/js/my-app/actions/usersActions.js");
 
 
 
@@ -83755,108 +84013,84 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var Rooms = function Rooms(props) {
-  var dispatch = Object(react_redux__WEBPACK_IMPORTED_MODULE_8__["useDispatch"])();
-  var rooms = Object(react_redux__WEBPACK_IMPORTED_MODULE_8__["useSelector"])(function (state) {
+  var dispatch = Object(react_redux__WEBPACK_IMPORTED_MODULE_5__["useDispatch"])();
+  var rooms = Object(react_redux__WEBPACK_IMPORTED_MODULE_5__["useSelector"])(function (state) {
     return state.rooms.rooms;
   });
-  var loading = Object(react_redux__WEBPACK_IMPORTED_MODULE_8__["useSelector"])(function (state) {
+  var roomUsers = Object(react_redux__WEBPACK_IMPORTED_MODULE_5__["useSelector"])(function (state) {
+    return state.users.roomUsers;
+  });
+  var loading = Object(react_redux__WEBPACK_IMPORTED_MODULE_5__["useSelector"])(function (state) {
     return state.auth.loading;
   });
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
-    dispatch(Object(_actions_roomsActions__WEBPACK_IMPORTED_MODULE_9__["GET_ROOMS_ACTION"])());
+    dispatch(Object(_actions_usersActions__WEBPACK_IMPORTED_MODULE_7__["RESET_ROOM_USERS_ACTION"])());
+    dispatch(Object(_actions_roomsActions__WEBPACK_IMPORTED_MODULE_6__["GET_ROOMS_ACTION"])());
   }, []);
-  /*
-  const deleteRoom = (roomId) => {
-      axios({
-          url: ROOMS_PAGE_API+ roomId,
-          method : 'DELETE',
-          headers : {
-              authorization: "Bearer "+ auth.token
-          }
-      })
-          .then(res => {
-              getRooms();
-              dispatchGlobalState(setToastShowAction())
-              dispatchGlobalState(setToastMessage("Room successfully removed",`${room.name} is removed`))
-          })
-          .catch(err => {
-              dispatchGlobalState(setToastShowAction())
-              dispatchGlobalState(setToastMessage("Error, try again",`${room.name} failed to remove`))
-          })
-  }
-  const getUsers = () => {
-      axios({
-          url : PROFILE_PAGE_API,
-          method : 'GET',
-          headers :{
-              authorization : 'Bearer '+ auth.token,
-          }
-      })
-          .then((res) => {
-              setUsers(res.data.data)
-          })
-  }
-   const getUser = (room) => {
-      axios({
-          url : ROOMS_PAGE_API + room.id + '/users',
-          method: 'GET',
-          headers : {
-              authorization : 'bearer '+ auth.token,
-          }
-      })
-          .then(res => {
-           })
-  }
-   const renderUsers = (room) => {
-      if(users.length) {
-          const roomUsers = users.filter(user => user.room.id == room.id);
-          return roomUsers.map(user => <div>{user.image}</div>)
-      }
-  }
-   */
+
+  var deleteRoom = function deleteRoom(roomId) {
+    dispatch(Object(_actions_roomsActions__WEBPACK_IMPORTED_MODULE_6__["REMOVE_ROOM_ACTION"])(roomId));
+  };
+
+  var getUsers = function getUsers(room) {
+    //let check = roomUsers.some(roomUser => parseInt(roomUser.roomId) === parseInt(room.id))
+    if (!roomUsers[room.id]) {
+      dispatch(Object(_actions_usersActions__WEBPACK_IMPORTED_MODULE_7__["GET_ROOM_USERS_ACTION"])(room.id));
+    }
+  };
+
+  var renderUsers = function renderUsers(roomId) {
+    if (roomUsers[roomId]) {
+      return roomUsers[roomId].length;
+    }
+  };
 
   var renderRooms = function renderRooms() {
     return rooms.map(function (room) {
+      getUsers(room);
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-xl-3 col-lg-4 col-md-6 col-sm-12",
         key: room.id
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components__WEBPACK_IMPORTED_MODULE_2__["Card"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components__WEBPACK_IMPORTED_MODULE_2__["Card"].Settings, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components__WEBPACK_IMPORTED_MODULE_2__["DropDown"], {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components__WEBPACK_IMPORTED_MODULE_1__["Card"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components__WEBPACK_IMPORTED_MODULE_1__["Card"].Settings, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components__WEBPACK_IMPORTED_MODULE_1__["DropDown"], {
         className: "fa fa-ellipsis-h"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components__WEBPACK_IMPORTED_MODULE_2__["DropDown"].Menu, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components__WEBPACK_IMPORTED_MODULE_2__["DropDown"].Item, {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components__WEBPACK_IMPORTED_MODULE_1__["DropDown"].Menu, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components__WEBPACK_IMPORTED_MODULE_1__["DropDown"].Item, {
         action: function action() {
           return props.history.push('/rooms/' + room.id + '/edit');
         }
-      }, "Edit"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components__WEBPACK_IMPORTED_MODULE_2__["DropDown"].Item, null, "Delete")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components__WEBPACK_IMPORTED_MODULE_2__["Card"].Image, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components__WEBPACK_IMPORTED_MODULE_2__["Card"].CardLink, {
+      }, "Edit"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components__WEBPACK_IMPORTED_MODULE_1__["DropDown"].Item, {
+        action: function action() {
+          return deleteRoom(room.id);
+        }
+      }, "Delete")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components__WEBPACK_IMPORTED_MODULE_1__["Card"].Image, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components__WEBPACK_IMPORTED_MODULE_1__["Card"].CardLink, {
         to: "/rooms/".concat(room.id)
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_UserIcon__WEBPACK_IMPORTED_MODULE_4__["default"], {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_UserIcon__WEBPACK_IMPORTED_MODULE_2__["default"], {
         letter: room.name[0]
-      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components__WEBPACK_IMPORTED_MODULE_2__["Card"].Header, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components__WEBPACK_IMPORTED_MODULE_2__["Card"].CardLink, {
+      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components__WEBPACK_IMPORTED_MODULE_1__["Card"].Header, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components__WEBPACK_IMPORTED_MODULE_1__["Card"].CardLink, {
         to: "/rooms/".concat(room.id)
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "far fa-comments"
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components__WEBPACK_IMPORTED_MODULE_2__["Card"].Title, null, room.name))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components__WEBPACK_IMPORTED_MODULE_2__["Card"].Footer, null, 10 //renderUsers(room)
-      )));
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components__WEBPACK_IMPORTED_MODULE_1__["Card"].Title, null, room.name))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components__WEBPACK_IMPORTED_MODULE_1__["Card"].Footer, null, renderUsers(room.id))));
     });
   };
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "home-page"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components__WEBPACK_IMPORTED_MODULE_2__["BreadCrumb"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components__WEBPACK_IMPORTED_MODULE_2__["BreadCrumb"].Item, {
-    url: _urls_AppBaseUrl__WEBPACK_IMPORTED_MODULE_7__["DASHBOARD_PAGE"]
-  }, "Dashboard"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components__WEBPACK_IMPORTED_MODULE_2__["BreadCrumb"].Active, null, "Rooms")), loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components__WEBPACK_IMPORTED_MODULE_2__["Loading"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components__WEBPACK_IMPORTED_MODULE_2__["Loading"].Large, null)) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components__WEBPACK_IMPORTED_MODULE_1__["BreadCrumb"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components__WEBPACK_IMPORTED_MODULE_1__["BreadCrumb"].Item, {
+    url: _urls_AppBaseUrl__WEBPACK_IMPORTED_MODULE_4__["DASHBOARD_PAGE"]
+  }, "Dashboard"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components__WEBPACK_IMPORTED_MODULE_1__["BreadCrumb"].Active, null, "Rooms")), loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components__WEBPACK_IMPORTED_MODULE_1__["Loading"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components__WEBPACK_IMPORTED_MODULE_1__["Loading"].Large, null)) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "rooms-container container-fluid"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "row"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "ml-3"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__["Link"], {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Link"], {
     to: "/rooms/add",
     className: "btn btn-primary"
-  }, "Add Room"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components__WEBPACK_IMPORTED_MODULE_2__["Navbar"].Nav, {
+  }, "Add Room"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components__WEBPACK_IMPORTED_MODULE_1__["Navbar"].Nav, {
     className: "ml-1 mt-2 row"
   }, "My Rooms"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "row rooms"
-  }, renderRooms(1))));
+  }, renderRooms())));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Rooms);
@@ -84073,7 +84307,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 var initState = {
-  rooms: []
+  rooms: [],
+  roomMembers: {
+    roomId: null,
+    members: []
+  },
+  membersLoading: true,
+  addRoomSuccess: false
 };
 var RoomsReducer = function RoomsReducer() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initState;
@@ -84083,6 +84323,31 @@ var RoomsReducer = function RoomsReducer() {
     case _actions__WEBPACK_IMPORTED_MODULE_0__["GET_ROOMS"]:
       return _objectSpread(_objectSpread({}, state), {}, {
         rooms: action.payload
+      });
+
+    case _actions__WEBPACK_IMPORTED_MODULE_0__["GET_ROOM_MEMBERS"]:
+      return _objectSpread(_objectSpread({}, state), {}, {
+        roomMembers: action.payload
+      });
+
+    case _actions__WEBPACK_IMPORTED_MODULE_0__["ADD_ROOM_SUCCESS"]:
+      return _objectSpread(_objectSpread({}, state), {}, {
+        addRoomSuccess: true
+      });
+
+    case _actions__WEBPACK_IMPORTED_MODULE_0__["ADD_ROOM_FAILS"]:
+      return _objectSpread(_objectSpread({}, state), {}, {
+        addRoomSuccess: false
+      });
+
+    case _actions__WEBPACK_IMPORTED_MODULE_0__["START_ROOM_MEMBERS_LOADING"]:
+      return _objectSpread(_objectSpread({}, state), {}, {
+        membersLoading: true
+      });
+
+    case _actions__WEBPACK_IMPORTED_MODULE_0__["STOP_ROOM_MEMBERS_LOADING"]:
+      return _objectSpread(_objectSpread({}, state), {}, {
+        membersLoading: false
       });
 
     default:
@@ -84102,14 +84367,38 @@ var RoomsReducer = function RoomsReducer() {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UsersReducer", function() { return UsersReducer; });
+/* harmony import */ var _actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions */ "./resources/js/my-app/actions/index.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
 var initState = {
-  users: []
+  users: [],
+  roomUsers: {}
 };
 var UsersReducer = function UsersReducer() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initState;
   var action = arguments.length > 1 ? arguments[1] : undefined;
 
   switch (action.type) {
+    case _actions__WEBPACK_IMPORTED_MODULE_0__["GET_USERS"]:
+      return _objectSpread(_objectSpread({}, state), {}, {
+        users: action.payload
+      });
+
+    case _actions__WEBPACK_IMPORTED_MODULE_0__["GET_ROOM_USERS"]:
+      return _objectSpread(_objectSpread({}, state), {}, {
+        roomUsers: _objectSpread(_objectSpread({}, state.roomUsers), action.payload)
+      });
+
+    case _actions__WEBPACK_IMPORTED_MODULE_0__["RESET_ROOM_USERS"]:
+      return _objectSpread(_objectSpread({}, state), {}, {
+        roomUsers: []
+      });
+
     default:
       return state;
   }

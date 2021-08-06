@@ -3,14 +3,22 @@ import UserIcon from "../../../components/UserIcon";
 import axios from "axios";
 import Modal from '../../../components/Modal'
 import {PROFILE_PAGE_API, ROOMS_PAGE_API} from "../../../urls/AppBaseUrl";
+import {useDispatch, useSelector} from "react-redux";
+import {GET_ROOM_MEMBERS_ACTION, REMOVE_ROOM_MEMBER_ACTION} from "../../../actions/roomsActions";
+import Loading from "../../../components/loading/index";
 
 const MessageUsers = (props) => {
 
-    const [members,setMembers] = useState([]);
-    // Search for users ...
-    const [users,setUsers] = useState([]);
-    const [searchUser,setSearchUser] = useState('');
+    const dispatch = useDispatch()
+    const {membersLoading, roomMembers} = useSelector(state => state.rooms);
 
+    useEffect(() => {
+        dispatch(GET_ROOM_MEMBERS_ACTION(props.id))
+    }, [])
+
+    // const [members,setMembers] = useState([]);
+    // Search for users ...
+    /*
     useEffect(() => {
         getMembers();
     },[])
@@ -37,27 +45,13 @@ const MessageUsers = (props) => {
             setUsers([]);
         }
     }, [searchUser])
-
+    */
     const removeUser = (user) => {
-        axios({
-            method:"DELETE",
-            url: ROOMS_PAGE_API + props.id + '/users/' + user.id,
-            headers : {
-                authorization: "bearer "+ auth.token,
-            }
-        })
-            .then((res) => {
-                dispatchGlobalState(setToastShowAction())
-                dispatchGlobalState(setToastMessage("User successfully removed",`${user.name} is removed`))
-                getMembers();
-            })
-            .catch(err => {
-                dispatchGlobalState(setToastShowAction())
-                dispatchGlobalState(setToastMessage("Error, failed to remove",`User failed to remove`))
-            })
+        dispatch(REMOVE_ROOM_MEMBER_ACTION(props.id, user))
     }
 
     // Get Room users ...
+    /*
     const getMembers = () => {
         axios({
             method:"GET",
@@ -73,6 +67,9 @@ const MessageUsers = (props) => {
                 console.log('error');
             })
     }
+    */
+
+    /*
     // add a member to the group
     const addUser  = () => {
         let selectedUser = users.find(user => user.email === searchUser);
@@ -96,6 +93,8 @@ const MessageUsers = (props) => {
                 dispatchGlobalState(setToastMessage("Error, failed to add",`User failed to add`))
             })
     }
+    */
+
     return (
         <div className="room-users">
             <div className="room-user-search">
@@ -104,57 +103,74 @@ const MessageUsers = (props) => {
             </div>
             <div className="room-users-list">
                 {
-                    members.map(member => {
-                        return (
-                            <div className="room-user" key={member.id}>
-                                {
-                                    member.image ? <UserIcon img={"/uploads/" + member.image} /> :
-                                        <UserIcon />
-                                }
-                                <div className="user-info">
-                                    <div className="username">
-                                        {member.name}
-                                    </div>
-                                    <div className={`${props.activeUsers.some(user => user.id === member.id) && 'active-user'}`} />
-                                    <div className="dropdown">
-                                        <i className="fa fa-ellipsis-h"  data-toggle="dropdown" />
-                                        <div className="dropdown-menu">
-                                            <div className="dropdown-item" onClick={() => removeUser(member)}>remove</div>
+                    membersLoading ?
+                        <Loading>
+                            <Loading.Large color={"#00F"} />
+                        </Loading>
+                        :
+                        roomMembers.members.map(member => {
+                            return (
+                                <div className="room-user" key={member.id}>
+                                    {
+                                        member.image ? <UserIcon img={"/uploads/" + member.image} /> :
+                                            <UserIcon />
+                                    }
+                                    <div className="user-info">
+                                        <div className="username">
+                                            {member.name}
+                                        </div>
+                                        <div
+                                            //className={`${props.activeUsers.some(user => user.id === member.id) && 'active-user'}`}
+                                        />
+                                        <div className="dropdown">
+                                            <i className="fa fa-ellipsis-h"  data-toggle="dropdown" />
+                                            <div className="dropdown-menu">
+                                                <div className="dropdown-item" onClick={() => removeUser(member)}>remove</div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        )
-                    })
+                            )
+                        })
                 }
             </div>
             <div className="room-controls">
-                <div onClick={() => dispatchGlobalState(setModalVisibleAction())}>
+                <div
+                    //onClick={() => dispatchGlobalState(setModalVisibleAction())}
+                >
                     <i className="fa fa-plus" />
                 </div>
             </div>
-            <Modal
-                title="Add User"
-                onClick={addUser}
-            >
-                <div className="add-user">
-                    <input
-                        value={searchUser}
-                        onChange={(e) => setSearchUser(e.target.value)}
-                        placeholder="search for user ..." />
-                    <div className="search-users-list">
-                        {
-                            users.map(user => {
-                                return (
-                                    <div className="search-user" key={user.id} onClick={() => setSearchUser(user.email)}>
-                                        <div>{user.email}</div>
-                                    </div>
-                                )
-                            })
-                        }
+
+            {
+                /*
+                <Modal
+                    title="Add User"
+                    //onClick={addUser}
+                >
+                    <div className="add-user">
+                        <input
+                            //value={searchUser}
+                            //onChange={(e) => setSearchUser(e.target.value)}
+                            placeholder="search for user ..." />
+                        <div className="search-users-list">
+                            {
+
+                                users.map(user => {
+                                    return (
+                                        <div className="search-user" key={user.id} onClick={() => setSearchUser(user.email)}>
+                                            <div>{user.email}</div>
+                                        </div>
+                                    )
+                                })
+
+
+                            }
+                        </div>
                     </div>
-                </div>
-            </Modal>
+                </Modal>
+                */
+            }
         </div>
     )
 }

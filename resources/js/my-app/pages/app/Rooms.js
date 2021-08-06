@@ -1,83 +1,49 @@
-import React, { useEffect,useContext,useState } from 'react';
-import axios from 'axios';
+import React, { useEffect } from 'react';
 import {Card,BreadCrumb,DropDown,Loading,Navbar} from "../../components";
-import {AppContext} from "../../context/AppContext";
 import UserIcon from "../../components/UserIcon";
 import {Link} from "react-router-dom";
-import {setToastMessage, setToastShowAction} from "../../context/actions/GlobalActions";
-import {DASHBOARD_PAGE, PROFILE_PAGE_API, ROOMS_PAGE_API} from "../../urls/AppBaseUrl";
+import {DASHBOARD_PAGE} from "../../urls/AppBaseUrl";
 import {useDispatch, useSelector} from "react-redux";
-import {GET_ROOMS_ACTION} from "../../actions/roomsActions";
+import {GET_ROOMS_ACTION,REMOVE_ROOM_ACTION} from "../../actions/roomsActions";
+import {GET_ROOM_USERS_ACTION, RESET_ROOM_USERS_ACTION} from "../../actions/usersActions";
 
 const Rooms = (props) => {
 
     const dispatch = useDispatch()
 
     const rooms = useSelector(state => state.rooms.rooms)
+    const roomUsers = useSelector(state => state.users.roomUsers)
     const loading = useSelector(state => state.auth.loading)
 
     useEffect(() => {
+        dispatch(RESET_ROOM_USERS_ACTION())
         dispatch(GET_ROOMS_ACTION())
     }, [])
 
-
-    /*
     const deleteRoom = (roomId) => {
-        axios({
-            url: ROOMS_PAGE_API+ roomId,
-            method : 'DELETE',
-            headers : {
-                authorization: "Bearer "+ auth.token
-            }
-        })
-            .then(res => {
-                getRooms();
-                dispatchGlobalState(setToastShowAction())
-                dispatchGlobalState(setToastMessage("Room successfully removed",`${room.name} is removed`))
-            })
-            .catch(err => {
-                dispatchGlobalState(setToastShowAction())
-                dispatchGlobalState(setToastMessage("Error, try again",`${room.name} failed to remove`))
-            })
-    }
-    const getUsers = () => {
-        axios({
-            url : PROFILE_PAGE_API,
-            method : 'GET',
-            headers :{
-                authorization : 'Bearer '+ auth.token,
-            }
-        })
-            .then((res) => {
-                setUsers(res.data.data)
-            })
+        dispatch(REMOVE_ROOM_ACTION(roomId))
     }
 
-    const getUser = (room) => {
-        axios({
-            url : ROOMS_PAGE_API + room.id + '/users',
-            method: 'GET',
-            headers : {
-                authorization : 'bearer '+ auth.token,
-            }
-        })
-            .then(res => {
 
-            })
-    }
+    const getUsers = (room) =>{
 
-    const renderUsers = (room) => {
-        if(users.length) {
-            const roomUsers = users.filter(user => user.room.id == room.id);
-            return roomUsers.map(user => <div>{user.image}</div>)
+        //let check = roomUsers.some(roomUser => parseInt(roomUser.roomId) === parseInt(room.id))
+        if(! roomUsers[room.id]) {
+            dispatch(GET_ROOM_USERS_ACTION(room.id))
         }
     }
 
-    */
+
+    const renderUsers = (roomId) => {
+        if (roomUsers[roomId]) {
+            return roomUsers[roomId].length;
+        }
+    }
 
 
     const renderRooms = () => {
         return rooms.map( room => {
+            getUsers(room)
             return (
                 <div className="col-xl-3 col-lg-4 col-md-6 col-sm-12" key={room.id}>
                     <Card>
@@ -87,7 +53,7 @@ const Rooms = (props) => {
                                     <DropDown.Item action={() => props.history.push('/rooms/'+ room.id + '/edit')}>
                                         Edit
                                     </DropDown.Item>
-                                    <DropDown.Item /*action={() => deleteRoom(room.id)}*/>
+                                    <DropDown.Item action={() => deleteRoom(room.id)}>
                                         Delete
                                     </DropDown.Item>
                                 </DropDown.Menu>
@@ -108,8 +74,7 @@ const Rooms = (props) => {
                         </Card.Header>
                         <Card.Footer>
                             {
-                                10
-                                //renderUsers(room)
+                                renderUsers(room.id)
                             }
                         </Card.Footer>
                     </Card>
@@ -145,7 +110,7 @@ const Rooms = (props) => {
                         </Navbar.Nav>
                         <div className="row rooms">
                             {
-                                renderRooms(1)
+                                renderRooms()
                             }
                         </div>
                     </div>

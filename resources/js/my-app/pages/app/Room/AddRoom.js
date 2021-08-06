@@ -1,9 +1,10 @@
-import React , {useState,useContext,useRef} from 'react';
+import React, {useState, useContext, useRef, useEffect} from 'react';
 import {AppContext} from "../../../context/AppContext";
 import {Card,BreadCrumb} from "../../../components";
 import UserIcon from "../../../components/UserIcon";
-import {setToastMessage, setToastShowAction} from "../../../context/actions/GlobalActions";
 import {ROOMS_PAGE, ROOMS_PAGE_API,APP_URL} from "../../../urls/AppBaseUrl";
+import {useDispatch, useSelector} from "react-redux";
+import {ADD_ROOM_ACTION} from "../../../actions/roomsActions";
 
 
 const AddRoom = (props) => {
@@ -11,9 +12,10 @@ const AddRoom = (props) => {
     const [room,setRoom] = useState({type:0})
     const avatarBtn = useRef(null);
     const [previewAvatar,setPreviewAvatar] = useState("");
-    const {auth,dispatchGlobalState} = useContext(AppContext);
     const [progress,setProgress] = useState(0);
 
+    const dispatch = useDispatch()
+    const addRoomSuccess = useSelector(state => state.rooms.addRoomSuccess)
     const chooseAvatar = (e) => {
         e.preventDefault();
         avatarBtn.current.click();
@@ -23,29 +25,19 @@ const AddRoom = (props) => {
         setRoom({...room,image: avatarBtn.current.files[0]})
         setPreviewAvatar(URL.createObjectURL(avatarBtn.current.files[0]))
     }
+
+    useEffect(() => {
+        if(addRoomSuccess) {
+            props.history.push(ROOMS_PAGE)
+        }
+    }, [addRoomSuccess])
+
     const addRoom =() => {
         let formData = new FormData();
         formData.append('name', room.name);
         formData.append('image', room.image);
         formData.append('type', room.type);
-        axios({
-            method:'POST',
-            url : ROOMS_PAGE_API,
-            data:formData,
-            headers : {
-                authorization : "Bearer " + auth.token,
-                "Content-Type" : 'multipart/form-data'
-            }
-        })
-            .then(res => {
-                dispatchGlobalState(setToastShowAction())
-                dispatchGlobalState(setToastMessage("Room added successfully",`${room.name} is Added`))
-                props.history.push(ROOMS_PAGE)
-            })
-            .catch(err => {
-                dispatchGlobalState(setToastShowAction())
-                dispatchGlobalState(setToastMessage("Error, failed to add",`${room.name} failed to add`))
-            })
+        dispatch(ADD_ROOM_ACTION(formData))
     }
 
     return (

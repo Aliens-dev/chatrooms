@@ -11,7 +11,7 @@ const Index = () => {
             <SidebarContainer />
             <div className="page-content" >
                 <NavbarContainer />
-                {/* <MyToast /> */}
+                <MyToast />
                 {
                     AppRoutes()
                 }

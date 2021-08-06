@@ -2,7 +2,6 @@ import {ROOMS_PAGE_API} from "../urls/AppBaseUrl";
 import {GET_MESSAGES, GET_ROOMS, START_MESSAGES_LOADING, STOP_MESSAGES_LOADING} from "./index";
 
 
-
 export const STOP_MESSAGES_LOADING_ACTION = () => {
     return {
         type: STOP_MESSAGES_LOADING,
@@ -14,7 +13,6 @@ export const START_MESSAGES_LOADING_ACTION = () => {
     }
 }
 
-
 export const GET_MESSAGES_ACTION = (roomId) => async (dispatch,getState) => {
     try {
         let res = await axios({
@@ -24,7 +22,6 @@ export const GET_MESSAGES_ACTION = (roomId) => async (dispatch,getState) => {
                 authorization : 'bearer '+ getState().auth.user.token,
             }
         })
-        console.log(res)
         dispatch({
             type: GET_MESSAGES,
             payload:res.data.data
