@@ -1,22 +1,22 @@
 import React, {useRef,useContext} from 'react';
-import {AppContext} from "../context/AppContext";
-import {setModalHiddenAction} from "../context/actions/GlobalActions";
-
+import { useDispatch, useSelector } from 'react-redux';
+import { HIDE_MODAL_ACTION } from '../actions/popupsActions';
 
 
 const Modal = (props) => {
 
-    const {globalState,dispatchGlobalState} = useContext(AppContext);
+    const dispatch = useDispatch()
+    const showModal = useSelector(state => state.popup.showModal)
 
     const myModal = useRef(null)
     const closeModal = () => {
-        dispatchGlobalState(setModalHiddenAction())
+        dispatch(HIDE_MODAL_ACTION())
     }
 
     const clickAway =(e) => {
         e.stopPropagation();
         if(e.target === myModal.current) {
-            dispatchGlobalState(setModalHiddenAction())
+            closeModal()
         }
     }
 
@@ -26,7 +26,7 @@ const Modal = (props) => {
         }
     }
     const render = () => {
-        if(!globalState.visibleModal) {
+        if(!showModal) {
             return null;
         }else {
             return (

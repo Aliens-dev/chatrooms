@@ -1,9 +1,11 @@
 import {
     GET_ROOMS,
+    GET_ROOM,
     GET_ROOM_MEMBERS,
     START_ROOM_MEMBERS_LOADING,
     STOP_ROOM_MEMBERS_LOADING,
-    ADD_ROOM_SUCCESS, ADD_ROOM_FAILS
+    ADD_ROOM_SUCCESS, ADD_ROOM_FAILS,
+    SINGLE_ROOM_LOADING_STOP,SINGLE_ROOM_LOADING_START
 } from "../actions";
 
 const initState = {
@@ -14,6 +16,8 @@ const initState = {
     },
     membersLoading: true,
     addRoomSuccess: false,
+    singleRoom: null,
+    singleRoomLoading: true,
 }
 
 export const RoomsReducer = (state = initState, action) => {
@@ -25,6 +29,9 @@ export const RoomsReducer = (state = initState, action) => {
         case ADD_ROOM_FAILS : return {...state, addRoomSuccess: false};
         case START_ROOM_MEMBERS_LOADING : return {...state, membersLoading: true};
         case STOP_ROOM_MEMBERS_LOADING : return {...state, membersLoading: false};
+        case GET_ROOM: return {...state, singleRoom: action.payload}
+        case SINGLE_ROOM_LOADING_STOP: return {...state, singleRoomLoading: false}
+        case SINGLE_ROOM_LOADING_START: return {...state, singleRoomLoading: true}
         default :return state;
     }
 }

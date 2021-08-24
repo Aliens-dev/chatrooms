@@ -5,9 +5,10 @@ import Pusher from 'pusher-js';
 import {BreadCrumb,Loading} from "../../../components";
 import {DASHBOARD_PAGE, ROOMS_PAGE, ROOMS_PAGE_API} from "../../../urls/AppBaseUrl";
 import MessageUsers from "./MessageUsers";
-import {Link, useParams} from 'react-router-dom';
+import {Link, Redirect, useParams} from 'react-router-dom';
 import {useDispatch, useSelector} from "react-redux";
 import {GET_MESSAGES_ACTION} from "../../../actions/MessagesActions";
+import { GET_ROOM_ACTION, REMOVE_ROOM_ACTION } from '../../../actions/roomsActions';
 
 const SingleRoom = props => {
     /*
@@ -106,41 +107,6 @@ const SingleRoom = props => {
     }, [socketMessage])
     */
     /*
-    const getRoom = () => {
-        axios({
-            method:"GET",
-            url: ROOMS_PAGE_API + props.match.params.id,
-            headers : {
-                Authorization : 'bearer ' + auth.token,
-            }
-        })
-            .then(res => {
-                setRoom(res.data.data);
-                getMessages();
-                setLoading(false)
-            })
-            .catch(err => {
-                props.history.push(ROOMS_PAGE);
-                setLoading(false)
-            })
-    }
-    const getMessages = () => {
-        axios({
-            url:ROOMS_PAGE_API+props.match.params.id+'/messages',
-            method:'GET',
-            headers : {
-                authorization : 'bearer '+ auth.token,
-            }
-        })
-            .then(res=> {
-                setMessages(res.data.data);
-            })
-            .catch(err => {
-
-            })
-    }
-    */
-    /*
     const sendMessage = (e) => {
         e.preventDefault();
         if(message === '') {
@@ -164,32 +130,23 @@ const SingleRoom = props => {
 
             })
     }
-
-    const deleteRoom = () => {
-        axios({
-            url: ROOMS_PAGE_API+ room.id,
-            method : 'DELETE',
-            headers : {
-                authorization: "Bearer "+ auth.token
-            }
-        })
-            .then(res => {
-                props.history.push(ROOMS_PAGE);
-            })
-            .catch(err => {
-                alert('Error Failed To delete!')
-            })
-    }
     */
 
     const dispatch = useDispatch();
-    const {loading, messages} = useSelector(state => state.messages)
-    const {user} = useSelector(state => state.auth.user)
+    const room = useSelector(state => state.rooms.singleRoom)
+    const singleRoomLoading = useSelector(state => state.rooms.singleRoomLoading)
+    const { loading, messages } = useSelector(state => state.messages)
+    const { user } = useSelector(state => state.auth.user)
     const { id } = useParams()
+
     useEffect(() => {
+        dispatch(GET_ROOM_ACTION(id))
         dispatch(GET_MESSAGES_ACTION(id))
     }, [])
 
+    const deleteRoom = () => {
+        dispatch(REMOVE_ROOM_ACTION(id))
+    }
 
     const renderMessages = () => {
         return messages.map(message => {
@@ -212,8 +169,18 @@ const SingleRoom = props => {
             }
         });
     }
-
-
+    
+    if(singleRoomLoading) {
+        return (
+            <Loading>
+                <Loading.Large />
+            </Loading>
+        )
+    }
+    
+    if(! room) {
+        return <Redirect to={ROOMS_PAGE} />
+    }
     return (
         <div className="single-room" >
             <BreadCrumb>
@@ -224,7 +191,7 @@ const SingleRoom = props => {
                     Public rooms
                 </BreadCrumb.Item>
                 <BreadCrumb.Active>
-                    ROOM NAME
+                    { room.name }
                 </BreadCrumb.Active>
             </BreadCrumb>
             <div className="room-section" >
@@ -238,7 +205,7 @@ const SingleRoom = props => {
                         </div>
                         <div className="room-name">
                             <span>
-                                room Name
+                                { room.name }
                             </span>
                         </div>
                         <div className="d-flex flex-grow-1"></div>
@@ -250,7 +217,7 @@ const SingleRoom = props => {
                             />
                             <div className="dropdown-menu">
                                 <Link to={ROOMS_PAGE+id+'/edit'} className="dropdown-item">Edit</Link>
-                                <div /*onClick={deleteRoom}*/ className="dropdown-item">Delete</div>
+                                <div onClick={deleteRoom} className="dropdown-item">Delete</div>
                             </div>
                         </div>
                     </div>

@@ -6,11 +6,13 @@ import {PROFILE_PAGE_API, ROOMS_PAGE_API} from "../../../urls/AppBaseUrl";
 import {useDispatch, useSelector} from "react-redux";
 import {GET_ROOM_MEMBERS_ACTION, REMOVE_ROOM_MEMBER_ACTION} from "../../../actions/roomsActions";
 import Loading from "../../../components/loading/index";
+import { SHOW_MODAL_ACTION } from '../../../actions/popupsActions';
 
 const MessageUsers = (props) => {
 
     const dispatch = useDispatch()
     const {membersLoading, roomMembers} = useSelector(state => state.rooms);
+    const showModal = useSelector(state => state.popup.showModal)
 
     useEffect(() => {
         dispatch(GET_ROOM_MEMBERS_ACTION(props.id))
@@ -19,10 +21,6 @@ const MessageUsers = (props) => {
     // const [members,setMembers] = useState([]);
     // Search for users ...
     /*
-    useEffect(() => {
-        getMembers();
-    },[])
-
     useEffect(() => {
         if(searchUser !== '') {
             axios({
@@ -49,26 +47,6 @@ const MessageUsers = (props) => {
     const removeUser = (user) => {
         dispatch(REMOVE_ROOM_MEMBER_ACTION(props.id, user))
     }
-
-    // Get Room users ...
-    /*
-    const getMembers = () => {
-        axios({
-            method:"GET",
-            url: ROOMS_PAGE_API + props.id + '/users',
-            headers : {
-                Authorization : 'bearer ' + auth.token,
-            }
-        })
-            .then(res => {
-                setMembers(res.data.data);
-            })
-            .catch(err => {
-                console.log('error');
-            })
-    }
-    */
-
     /*
     // add a member to the group
     const addUser  = () => {
@@ -136,40 +114,40 @@ const MessageUsers = (props) => {
             </div>
             <div className="room-controls">
                 <div
-                    //onClick={() => dispatchGlobalState(setModalVisibleAction())}
+                    onClick={() => dispatch(SHOW_MODAL_ACTION())}
                 >
                     <i className="fa fa-plus" />
                 </div>
             </div>
 
             {
-                /*
-                <Modal
-                    title="Add User"
-                    //onClick={addUser}
-                >
-                    <div className="add-user">
-                        <input
-                            //value={searchUser}
-                            //onChange={(e) => setSearchUser(e.target.value)}
-                            placeholder="search for user ..." />
-                        <div className="search-users-list">
-                            {
+                
+                    <Modal
+                        title="Add User"
+                        //onClick={addUser}
+                    >
+                        <div className="add-user">
+                            <input
+                                //value={searchUser}
+                                //onChange={(e) => setSearchUser(e.target.value)}
+                                placeholder="search for user ..." />
+                            <div className="search-users-list">
+                                {
+                                    /*
+                                    users.map(user => {
+                                        return (
+                                            <div className="search-user" key={user.id} onClick={() => setSearchUser(user.email)}>
+                                                <div>{user.email}</div>
+                                            </div>
+                                        )
+                                    })
+                                       */ 
 
-                                users.map(user => {
-                                    return (
-                                        <div className="search-user" key={user.id} onClick={() => setSearchUser(user.email)}>
-                                            <div>{user.email}</div>
-                                        </div>
-                                    )
-                                })
-
-
-                            }
+                                }
+                            </div>
                         </div>
-                    </div>
-                </Modal>
-                */
+                    </Modal>
+                
             }
         </div>
     )

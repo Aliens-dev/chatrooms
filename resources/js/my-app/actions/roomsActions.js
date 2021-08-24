@@ -6,7 +6,10 @@ import {
     GET_ROOM_MEMBERS,
     GET_ROOMS,
     START_ROOM_MEMBERS_LOADING,
-    STOP_ROOM_MEMBERS_LOADING
+    STOP_ROOM_MEMBERS_LOADING,
+    GET_ROOM,
+    SINGLE_ROOM_LOADING_STOP,
+    SINGLE_ROOM_LOADING_START
 } from "./index";
 import {SHOW_TOAST_ACTION} from "./popupsActions";
 import {STOP_LOADING_ACTION} from "./authActions";
@@ -115,7 +118,7 @@ export const REMOVE_ROOM_MEMBER_ACTION = (roomId, member) => async (dispatch, ge
 
 export const REMOVE_ROOM_ACTION = (roomId) => async (dispatch, getState) => {
     try {
-        axios({
+        await axios({
             url: ROOMS_PAGE_API+ roomId,
             method : 'DELETE',
             headers : {
@@ -126,5 +129,36 @@ export const REMOVE_ROOM_ACTION = (roomId) => async (dispatch, getState) => {
         dispatch(GET_ROOMS_ACTION())
     }catch (e) {
         dispatch(SHOW_TOAST_ACTION("Error, try again",`failed to remove room`))
+    }
+}
+
+export const GET_ROOM_ACTION = roomId => async (dispatch, getState) => {
+    dispatch(SINGLE_ROOM_LOADING_START_ACTION())
+    try {
+        const res = await axios({
+            url: ROOMS_PAGE_API + roomId,
+            method : 'GET',
+            headers : {
+                authorization: "Bearer "+ getState().auth.user.token
+            }
+        })
+        dispatch({
+            type: GET_ROOM,
+            payload: res.data.data
+        })
+        dispatch(SINGLE_ROOM_LOADING_STOP_ACTION())
+    }catch (e) {
+        dispatch(SINGLE_ROOM_LOADING_STOP_ACTION())
+    }
+} 
+
+export const SINGLE_ROOM_LOADING_STOP_ACTION = () => {
+    return {
+        type: SINGLE_ROOM_LOADING_STOP
+    }
+}
+export const SINGLE_ROOM_LOADING_START_ACTION = () => {
+    return {
+        type: SINGLE_ROOM_LOADING_START
     }
 }
